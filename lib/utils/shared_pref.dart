@@ -1,1 +1,3 @@
-const kFirstTimeLog = "kFirstTimeLog";
+import 'dart:ffi';
+
+const kFirstTimeLog = 'kFirstTimeLog';

@@ -1,31 +1,38 @@
+import 'dart:async';
 import 'dart:ffi';
 
 import 'package:contacts_buddy/pages/home/home.dart';
 import 'package:contacts_buddy/pages/welcome/welcome.dart';
 import 'package:contacts_buddy/utils/shared_pref.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:developer' as dev;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashProvider extends ChangeNotifier {
+  final storage = new FlutterSecureStorage();
   Future<void> splashScreenLoading(context) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var fistLogin = await storage.read(key: kFirstTimeLog);
     try {
-      bool? boolValue = prefs.getBool('kFirstTimeLog');
-      if (boolValue == 'true') {
-        dev.log(boolValue.toString());
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) {
-            return const HomeScreen();
-          },
-        ));
+      if (fistLogin == 'true') {
+        Timer(Duration(seconds: 3), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeScreen(),
+            ),
+          );
+        });
       } else {
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) {
-            return const WelcomeScreen();
-          },
-        ));
+        Timer(Duration(seconds: 3), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => WelcomeScreen(),
+            ),
+          );
+        });
       }
     } catch (e) {
       dev.log({e}.toString());
@@ -33,10 +40,8 @@ class SplashProvider extends ChangeNotifier {
   }
 
   Future<void> firstTimeLoginVerificationProcess(context) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
-      prefs.setBool('kFirstTimeLog', true);
-      dev.log(prefs.toString());
+      storage.write(key: kFirstTimeLog, value: 'true');
       Navigator.push(
         context,
         MaterialPageRoute(
