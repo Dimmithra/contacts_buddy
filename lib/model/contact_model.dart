@@ -1,25 +1,38 @@
+import 'dart:convert';
+
+ContactModel contactModelFromMap(String str) =>
+    ContactModel.fromMap(json.decode(str));
+
+String contactModelToMap(ContactModel data) => json.encode(data.toMap());
+
 class ContactModel {
-  final String lastname;
-  final String firstname;
-  final String mobileno;
-  final String email;
+  final int? userid;
+  final String? firstName;
+  final String? lastName;
+  final String? mobileNo;
+  final String? email;
 
-  const ContactModel({
-    required this.firstname,
-    required this.lastname,
-    required this.mobileno,
-    required this.email,
+  ContactModel({
+    this.userid,
+    this.firstName,
+    this.lastName,
+    this.mobileNo,
+    this.email,
   });
-  Map<String, dynamic> toMap() {
-    return {
-      'firstname': firstname,
-      'lastname': lastname,
-      'mobileno': mobileno,
-      'email': email,
-    };
-  }
 
-  String toString() {
-    return 'ContactModel{firstname: $firstname, lastname: $lastname, mobileno: $mobileno,email: $email}';
-  }
+  factory ContactModel.fromMap(Map<String, dynamic> json) => ContactModel(
+        userid: json["userid"],
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        mobileNo: json["mobileNo"],
+        email: json["email"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "userid": userid,
+        "firstName": firstName,
+        "lastName": lastName,
+        "mobileNo": mobileNo,
+        "email": email,
+      };
 }
