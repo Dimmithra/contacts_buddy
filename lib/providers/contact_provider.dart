@@ -4,7 +4,6 @@ import 'package:contacts_buddy/pages/home/home.dart';
 import 'package:contacts_buddy/widgets/common_message.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:sqflite/sqflite.dart';
 import 'dart:developer' as dev;
 
 class ContactProvider extends ChangeNotifier {
@@ -15,17 +14,26 @@ class ContactProvider extends ChangeNotifier {
   TextEditingController lastnameController = TextEditingController();
   TextEditingController get getlastnameController => lastnameController;
 
-  TextEditingController mobileNoController = TextEditingController();
-  TextEditingController get getmobileNoController => mobileNoController;
+  TextEditingController pmobileNoController = TextEditingController();
+  TextEditingController get getpmobileNoController => pmobileNoController;
+
+  TextEditingController secMobileNoController = TextEditingController();
+  TextEditingController get getsecMobileNoController => secMobileNoController;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController get getemailController => emailController;
 
+  TextEditingController specialCommentController = TextEditingController();
+  TextEditingController get getspecialCommentController =>
+      specialCommentController;
+
   Future<void> clearData(context) async {
     getfirstNameController.clear();
     getlastnameController.clear();
-    getmobileNoController.clear();
+    getpmobileNoController.clear();
+    getsecMobileNoController.clear();
     getemailController.clear();
+    getspecialCommentController.clear();
   }
 
   // createContact
@@ -55,10 +63,13 @@ class ContactProvider extends ChangeNotifier {
     try {
       setloadSaveData(true);
       var res = await db.createNewNumber(ContactModel(
-          firstName: getfirstNameController.text,
-          lastName: getlastnameController.text,
-          mobileNo: mobileNoController.text,
-          email: emailController.text));
+        firstName: getfirstNameController.text,
+        lastName: getlastnameController.text,
+        primaryMobileNo: getpmobileNoController.text,
+        secondoryNo: getsecMobileNoController.text,
+        email: emailController.text,
+        specialNote: getspecialCommentController.text,
+      ));
       if (res == 'success') {
         commonMessage(context,
             errorTxt: 'Mobile Number Save Success',
@@ -68,7 +79,12 @@ class ContactProvider extends ChangeNotifier {
                 child:
                     const Text("okay", style: TextStyle(color: Colors.white)),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(
+                  // Navigator.push(context, MaterialPageRoute(
+                  //   builder: (context) {
+                  //     return const HomeScreen();
+                  //   },
+                  // ));
+                  Navigator.pushReplacement(context, MaterialPageRoute(
                     builder: (context) {
                       return HomeScreen();
                     },
@@ -83,6 +99,27 @@ class ContactProvider extends ChangeNotifier {
       dev.log({e}.toString());
     } finally {
       setloadSaveData(false);
+    }
+  }
+
+  bool loadHomeData = false;
+  bool get getloadHomeData => loadHomeData;
+  setloadHomeData(val) {
+    loadHomeData = val;
+    notifyListeners();
+  }
+
+  List<Map<String, dynamic>> data = [];
+
+  Future<void> loadAllContactRecords(context) async {
+    setloadHomeData(true);
+    try {
+      List<Map<String, dynamic>> contactRecord = await db.getAllData();
+      data.addAll(contactRecord);
+    } catch (e) {
+      dev.log(e.toString());
+    } finally {
+      setloadHomeData(false);
     }
   }
 }

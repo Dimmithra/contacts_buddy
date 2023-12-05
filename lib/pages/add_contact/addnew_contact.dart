@@ -73,12 +73,22 @@ class _NewContactAddState extends State<NewContactAdd> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CommonTextFeil(
-                        hinttext: 'Mobile Number',
-                        label: 'Mobile Number',
+                        hinttext: 'Primary Mobile Number',
+                        label: 'Primary Mobile Number',
                         validation: true,
                         maxLength: 15,
                         textInputType: TextInputType.number,
-                        controller: contactProvider.getmobileNoController,
+                        controller: contactProvider.getpmobileNoController,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CommonTextFeil(
+                        hinttext: 'Secondary Mobile Number',
+                        label: 'Secondary Mobile Number',
+                        maxLength: 15,
+                        textInputType: TextInputType.number,
+                        controller: contactProvider.getsecMobileNoController,
                       ),
                     ),
                     Padding(
@@ -87,6 +97,14 @@ class _NewContactAddState extends State<NewContactAdd> {
                         hinttext: 'Email',
                         label: 'Email',
                         controller: contactProvider.emailController,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CommonTextFeil(
+                        hinttext: 'Special Note',
+                        label: 'Special Note',
+                        controller: contactProvider.getspecialCommentController,
                       ),
                     ),
                     Padding(

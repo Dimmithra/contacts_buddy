@@ -7,8 +7,8 @@ class CommonPageLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoadingAnimationWidget.waveDots(
-      color: Colors.white,
-      size: 30,
+      color: Colors.blue,
+      size: 50,
     );
   }
 }

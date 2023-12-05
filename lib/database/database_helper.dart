@@ -9,12 +9,14 @@ class DataBaseHelper {
 
   //tables
   String user = '''
-  CREATE TABLE users(
+  CREATE TABLE contactdetails(
     userid  INTEGER PRIMARY KEY AUTOINCREMENT,
     firstName TEXT,
     lastName TEXT,
-    mobileNo TEXT UNIQUE,
-    email TEXT
+    primaryMobileNo TEXT UNIQUE,
+    secondoryNo TEXT,
+    email TEXT,
+    specialNote TEXT
   )
   ''';
 
@@ -35,7 +37,7 @@ class DataBaseHelper {
   Future<String> createNewNumber(ContactModel contactModel) async {
     try {
       final Database db = await initDB();
-      var res = await db.insert("users", contactModel.toMap());
+      var res = await db.insert("contactdetails", contactModel.toMap());
       dev.log(res.toString());
       return 'success';
     } catch (e) {
@@ -45,6 +47,6 @@ class DataBaseHelper {
 
   Future<List<Map<String, dynamic>>> getAllData() async {
     final Database db = await initDB();
-    return await db.query("users");
+    return await db.query("contactdetails");
   }
 }

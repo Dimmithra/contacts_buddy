@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:contacts_buddy/pages/home/home.dart';
 import 'package:contacts_buddy/pages/welcome/welcome.dart';
@@ -8,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:developer' as dev;
 
-import 'package:shared_preferences/shared_preferences.dart';
-
 class SplashProvider extends ChangeNotifier {
   final storage = new FlutterSecureStorage();
   Future<void> splashScreenLoading(context) async {
@@ -17,11 +14,12 @@ class SplashProvider extends ChangeNotifier {
     try {
       if (fistLogin == 'true') {
         Timer(Duration(seconds: 3), () {
-          Navigator.push(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => HomeScreen(),
+              builder: (context) => const HomeScreen(),
             ),
+            (route) => false,
           );
         });
       } else {
