@@ -12,6 +12,7 @@ class CommonContactCard extends StatelessWidget {
     this.email,
     this.secMobileNo,
     this.specialNote,
+    required this.onpressDelete,
   });
   final String title;
   final String? subTitle;
@@ -21,6 +22,7 @@ class CommonContactCard extends StatelessWidget {
   final String? email;
   final String? secMobileNo;
   final String? specialNote;
+  final Function() onpressDelete;
   @override
   Widget build(BuildContext context) {
     return ExpansionTileCard(
@@ -34,7 +36,7 @@ class CommonContactCard extends StatelessWidget {
             fontSize: 24,
             fontWeight: FontWeight.bold,
           )),
-      borderRadius: BorderRadius.circular(05),
+      borderRadius: BorderRadius.circular(20),
       leading: Container(
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -75,7 +77,10 @@ class CommonContactCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Icon(Icons.delete),
+                        IconButton(
+                          onPressed: onpressDelete,
+                          icon: Icon(Icons.delete),
+                        ),
                         Icon(Icons.edit),
                       ],
                     ),

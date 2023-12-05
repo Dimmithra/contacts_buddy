@@ -116,9 +116,11 @@ class _NewContactAddState extends State<NewContactAdd> {
                             : CommonBtn(
                                 backgroundColor: kPrimaryBtn,
                                 onPress: () {
-                                  if (formKey.currentState!.validate()) {
-                                    contactProvider.createAccount(context);
-                                  }
+                                  setState(() {
+                                    if (formKey.currentState!.validate()) {
+                                      contactProvider.createAccount(context);
+                                    }
+                                  });
                                 },
                                 btnName: 'Done',
                                 fontColor: Colors.white,

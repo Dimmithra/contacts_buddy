@@ -49,4 +49,11 @@ class DataBaseHelper {
     final Database db = await initDB();
     return await db.query("contactdetails");
   }
+
+  //delete
+  Future<void> deleteItem(String primaryMobileNo) async {
+    final Database db = await initDB();
+    await db.delete('contactdetails',
+        where: 'primaryMobileNo = ?', whereArgs: [primaryMobileNo]);
+  }
 }

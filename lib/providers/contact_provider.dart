@@ -59,18 +59,32 @@ class ContactProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  ContactModel? contactModel;
+  ContactModel? get getcontactModel => contactModel;
+  setcontactModel(val) {
+    contactModel;
+    notifyListeners();
+  }
+
+  //create new account
   Future<void> createAccount(context) async {
+    setloadSaveData(true);
     try {
-      setloadSaveData(true);
-      var res = await db.createNewNumber(ContactModel(
-        firstName: getfirstNameController.text,
-        lastName: getlastnameController.text,
-        primaryMobileNo: getpmobileNoController.text,
-        secondoryNo: getsecMobileNoController.text,
-        email: emailController.text,
-        specialNote: getspecialCommentController.text,
-      ));
+      setcontactModel(null);
+      var res = await db.createNewNumber(
+        ContactModel(
+          firstName: getfirstNameController.text,
+          lastName: getlastnameController.text,
+          primaryMobileNo: getpmobileNoController.text,
+          secondoryNo: getsecMobileNoController.text,
+          email: emailController.text,
+          specialNote: getspecialCommentController.text,
+        ),
+      );
+      ContactModel temp = ContactModel();
+
       if (res == 'success') {
+        setcontactModel(temp);
         commonMessage(context,
             errorTxt: 'Mobile Number Save Success',
             btnType: 3,
@@ -79,16 +93,9 @@ class ContactProvider extends ChangeNotifier {
                 child:
                     const Text("okay", style: TextStyle(color: Colors.white)),
                 onPressed: () {
-                  // Navigator.push(context, MaterialPageRoute(
-                  //   builder: (context) {
-                  //     return const HomeScreen();
-                  //   },
-                  // ));
-                  Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) {
-                      return HomeScreen();
-                    },
-                  ));
+                  loadAllContactRecords(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 },
               )
             ]).show();
@@ -114,12 +121,18 @@ class ContactProvider extends ChangeNotifier {
   Future<void> loadAllContactRecords(context) async {
     setloadHomeData(true);
     try {
+      setcontactModel(null);
       List<Map<String, dynamic>> contactRecord = await db.getAllData();
+      data.clear();
       data.addAll(contactRecord);
     } catch (e) {
       dev.log(e.toString());
     } finally {
       setloadHomeData(false);
     }
+  }
+
+  Future<void> deleteRecord(context, {required String mobileNo}) async {
+    DataBaseHelper().deleteItem(mobileNo);
   }
 }
