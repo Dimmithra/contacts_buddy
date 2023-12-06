@@ -6,3 +6,4 @@ const kPrimaryBtn = Color.fromARGB(255, 0, 96, 174);
 const kdefWhiteColor = Colors.white;
 const kErrorMessage = Colors.red;
 const kWarnningMessage = Colors.amber;
+const kDeleteColor = Colors.red;

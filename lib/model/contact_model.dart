@@ -2,7 +2,6 @@
 //
 //     final contactModel = contactModelFromMap(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 ContactModel contactModelFromMap(String str) =>

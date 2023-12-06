@@ -1,3 +1,4 @@
+import 'package:contacts_buddy/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 
@@ -13,6 +14,7 @@ class CommonContactCard extends StatelessWidget {
     this.secMobileNo,
     this.specialNote,
     required this.onpressDelete,
+    required this.onpressUpdate,
   });
   final String title;
   final String? subTitle;
@@ -23,6 +25,7 @@ class CommonContactCard extends StatelessWidget {
   final String? secMobileNo;
   final String? specialNote;
   final Function() onpressDelete;
+  final Function() onpressUpdate;
   @override
   Widget build(BuildContext context) {
     return ExpansionTileCard(
@@ -72,16 +75,38 @@ class CommonContactCard extends StatelessWidget {
                     '$specialNote:',
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        IconButton(
-                          onPressed: onpressDelete,
-                          icon: Icon(Icons.delete),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: kDeleteColor,
+                          ),
+                          child: IconButton(
+                            onPressed: onpressDelete,
+                            icon:
+                                const Icon(Icons.delete, color: kdefWhiteColor),
+                          ),
                         ),
-                        Icon(Icons.edit),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: kDefAppBarColor,
+                          ),
+                          child: IconButton(
+                            onPressed: onpressUpdate,
+                            icon: const Icon(
+                              Icons.edit,
+                              color: kdefWhiteColor,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   )

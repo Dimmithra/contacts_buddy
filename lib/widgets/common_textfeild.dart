@@ -9,7 +9,7 @@ class CommonTextFeil extends StatelessWidget {
     required this.label,
     this.suffixicon,
     this.validation = false,
-    required this.controller,
+    this.controller,
     this.fillColor,
     this.maxLength,
     this.textInputType,
@@ -19,7 +19,7 @@ class CommonTextFeil extends StatelessWidget {
   final Widget? suffixicon;
   final bool? validation;
   final Color? fillColor;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final int? maxLength;
   final TextInputType? textInputType;
   @override
@@ -39,7 +39,7 @@ class CommonTextFeil extends StatelessWidget {
         filled: true,
         fillColor: fillColor,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(30),
         ),
       ),
       validator: (value) {

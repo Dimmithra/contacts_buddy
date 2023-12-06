@@ -1,6 +1,5 @@
 import 'package:contacts_buddy/database/database_helper.dart';
 import 'package:contacts_buddy/model/contact_model.dart';
-import 'package:contacts_buddy/pages/home/home.dart';
 import 'package:contacts_buddy/widgets/common_message.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';

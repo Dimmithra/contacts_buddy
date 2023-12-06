@@ -1,5 +1,4 @@
 import 'package:contacts_buddy/model/contact_model.dart';
-import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:developer' as dev;

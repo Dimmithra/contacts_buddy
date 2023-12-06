@@ -1,4 +1,3 @@
-import 'package:contacts_buddy/pages/home/home.dart';
 import 'package:contacts_buddy/providers/splash_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
