@@ -1,5 +1,6 @@
 import 'package:contacts_buddy/database/database_helper.dart';
 import 'package:contacts_buddy/model/contact_model.dart';
+import 'package:contacts_buddy/pages/home/home.dart';
 import 'package:contacts_buddy/widgets/common_message.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -132,6 +133,30 @@ class ContactProvider extends ChangeNotifier {
   }
 
   Future<void> deleteRecord(context, {required String mobileNo}) async {
-    DataBaseHelper().deleteItem(mobileNo);
+    try {
+      var res = await DataBaseHelper().deleteItem(mobileNo);
+      if (res == 'success') {
+        commonMessage(context,
+            errorTxt: 'Delete Contact recode Succes Success',
+            btnType: 3,
+            buttons: [
+              DialogButton(
+                child: Text('Okay'),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeScreen(),
+                      ));
+                },
+              )
+            ]).show();
+      } else {
+        commonMessage(context, errorTxt: 'Delete fail', btnType: 2).show();
+      }
+    } catch (e) {
+      dev.log('$e');
+    }
+    // var res = await DataBaseHelper().deleteItem(mobileNo);
   }
 }

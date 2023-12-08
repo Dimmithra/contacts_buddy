@@ -1,4 +1,5 @@
 import 'package:contacts_buddy/model/contact_model.dart';
+import 'package:contacts_buddy/widgets/common_message.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:developer' as dev;
@@ -50,9 +51,29 @@ class DataBaseHelper {
   }
 
   //delete
-  Future<void> deleteItem(String primaryMobileNo) async {
+  Future<String> deleteItem(String primaryMobileNo) async {
     final Database db = await initDB();
-    await db.delete('contactdetails',
-        where: 'primaryMobileNo = ?', whereArgs: [primaryMobileNo]);
+    try {
+      await db.delete('contactdetails',
+          where: 'primaryMobileNo = ?', whereArgs: [primaryMobileNo]);
+      return "success";
+    } catch (e) {
+      return '$e';
+    }
+  }
+
+  //update
+  Future<void> updateContacrDetails(String firstname) async {
+    var databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, 'contact.db');
+
+    Database database = await openDatabase(path, version: 1);
+
+    await database.rawUpdate(
+      'UPDATE contactdetails SET firstName = ? WHERE firstname = ?',
+      [firstname],
+    );
+
+    await database.close();
   }
 }
