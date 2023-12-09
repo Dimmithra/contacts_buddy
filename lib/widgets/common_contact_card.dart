@@ -13,8 +13,8 @@ class CommonContactCard extends StatelessWidget {
     this.email,
     this.secMobileNo,
     this.specialNote,
-    required this.onpressDelete,
-    required this.onpressUpdate,
+    required this.delete,
+    required this.updateIcon,
   });
   final String title;
   final String? subTitle;
@@ -24,8 +24,8 @@ class CommonContactCard extends StatelessWidget {
   final String? email;
   final String? secMobileNo;
   final String? specialNote;
-  final Function() onpressDelete;
-  final Function() onpressUpdate;
+  final Widget delete;
+  final Widget updateIcon;
   @override
   Widget build(BuildContext context) {
     return ExpansionTileCard(
@@ -85,11 +85,7 @@ class CommonContactCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(25),
                             color: kDeleteColor,
                           ),
-                          child: IconButton(
-                            onPressed: onpressDelete,
-                            icon:
-                                const Icon(Icons.delete, color: kdefWhiteColor),
-                          ),
+                          child: delete,
                         ),
                         const SizedBox(
                           width: 10,
@@ -99,13 +95,14 @@ class CommonContactCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(25),
                             color: kDefAppBarColor,
                           ),
-                          child: IconButton(
-                            onPressed: onpressUpdate,
-                            icon: const Icon(
-                              Icons.edit,
-                              color: kdefWhiteColor,
-                            ),
-                          ),
+                          child: updateIcon,
+                          // IconButton(
+                          //   onPressed: onpressUpdate,
+                          //   icon: const Icon(
+                          //     Icons.edit,
+                          //     color: kdefWhiteColor,
+                          //   ),
+                          // ),
                         ),
                       ],
                     ),

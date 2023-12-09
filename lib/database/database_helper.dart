@@ -62,18 +62,51 @@ class DataBaseHelper {
     }
   }
 
-  //update
-  Future<void> updateContacrDetails(String firstname) async {
-    var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'contact.db');
-
-    Database database = await openDatabase(path, version: 1);
-
-    await database.rawUpdate(
-      'UPDATE contactdetails SET firstName = ? WHERE firstname = ?',
-      [firstname],
-    );
-
-    await database.close();
+  Future<String> updateContactRecorde(
+    // int userid,
+    String firstName,
+    String lastName,
+    String primaryMobileNo,
+    String secondoryNo,
+    String email,
+    String specialNote,
+  ) async {
+    // final db = await DatabaseHelper.instance.database;
+    final Database db = await initDB();
+    try {
+      await db.update(
+        'contactdetails',
+        {
+          'firstName': firstName,
+          'lastName': lastName,
+          'primaryMobileNo': primaryMobileNo,
+          'secondoryNo': secondoryNo,
+          'email': email,
+          'specialNote': specialNote,
+        },
+        where: 'firstName = ?',
+        whereArgs: [firstName],
+      );
+      dev.log(
+        "F:${firstName},L:${lastName},PM:${primaryMobileNo},SEC:${secondoryNo},email:${email},specialNote:${specialNote}",
+      );
+      return 'success';
+    } catch (e) {
+      return '$e';
+      // dev.log('$e');
+    }
+    // await db.update(
+    //   'contactdetails',
+    //   {
+    //     'firstName': firstName,
+    //     'age': lastName,
+    //     'primaryMobileNo': primaryMobileNo,
+    //     'secondoryNo': secondoryNo,
+    //     'email': email,
+    //     'specialNote': specialNote,
+    //   },
+    //   where: 'firstName = ?',
+    //   whereArgs: [firstName],
+    // );
   }
 }

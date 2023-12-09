@@ -132,31 +132,89 @@ class ContactProvider extends ChangeNotifier {
     }
   }
 
+  bool loadDeleteRec = false;
+  bool get getloadDeleteRec => loadDeleteRec;
+  setloadDeleteRec(val) {
+    loadDeleteRec = val;
+    notifyListeners();
+  }
+
   Future<void> deleteRecord(context, {required String mobileNo}) async {
     try {
+      setloadDeleteRec(true);
       var res = await DataBaseHelper().deleteItem(mobileNo);
+      notifyListeners();
       if (res == 'success') {
-        commonMessage(context,
-            errorTxt: 'Delete Contact recode Succes Success',
-            btnType: 3,
-            buttons: [
-              DialogButton(
-                child: Text('Okay'),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HomeScreen(),
-                      ));
-                },
-              )
-            ]).show();
+        commonMessage(
+          context,
+          errorTxt: 'Delete Contact recode Succes Success',
+          btnType: 3,
+          buttons: [
+            DialogButton(
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomeScreen(),
+                  ),
+                  (route) => false,
+                );
+              },
+            )
+          ],
+        ).show();
       } else {
         commonMessage(context, errorTxt: 'Delete fail', btnType: 2).show();
       }
     } catch (e) {
       dev.log('$e');
+    } finally {
+      setloadDeleteRec(false);
     }
-    // var res = await DataBaseHelper().deleteItem(mobileNo);
+  }
+
+  //update
+
+  Future<void> updateContactRec(
+    context, {
+    required String firstName,
+    required String lastName,
+    required String primaryMobileNo,
+    required String secondoryNo,
+    required String email,
+    required String specialNote,
+  }) async {
+    try {
+      var res = await DataBaseHelper().updateContactRecorde(firstName, lastName,
+          primaryMobileNo, secondoryNo, email, specialNote);
+      if (res == 'success') {
+        commonMessage(
+          context,
+          errorTxt: 'Contact Recode Modification \n Success',
+          btnType: 3,
+          buttons: [
+            DialogButton(
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomeScreen(),
+                  ),
+                  (route) => false,
+                );
+              },
+            )
+          ],
+        ).show();
+      } else {
+        commonMessage(context,
+                errorTxt: 'Contact Recode Modification \n fail', btnType: 1)
+            .show();
+      }
+    } catch (e) {
+      dev.log('$e');
+    } finally {}
   }
 }
