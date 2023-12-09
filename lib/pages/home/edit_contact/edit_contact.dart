@@ -2,6 +2,7 @@ import 'package:contacts_buddy/providers/contact_provider.dart';
 import 'package:contacts_buddy/utils/colors.dart';
 import 'package:contacts_buddy/utils/main_body.dart';
 import 'package:contacts_buddy/widgets/common_btn.dart';
+import 'package:contacts_buddy/widgets/common_loader.dart';
 import 'package:contacts_buddy/widgets/common_textfeild.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -111,39 +112,48 @@ class _EditeContactScreenState extends State<EditeContactScreen> {
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        child: CommonBtn(
-                          onPress: () {
-                            contactProvider.updateContactRec(
-                              context,
-                              firstName: widget.firstName,
-                              lastName: contactProvider
-                                      .getlastnameController.text.isEmpty
-                                  ? widget.lastName
-                                  : contactProvider.getlastnameController.text,
-                              primaryMobileNo: contactProvider
-                                      .getpmobileNoController.text.isEmpty
-                                  ? widget.mobileNo1
-                                  : contactProvider.getpmobileNoController.text,
-                              secondoryNo: contactProvider
-                                      .getsecMobileNoController.text.isEmpty
-                                  ? widget.mobileNo2
-                                  : contactProvider
-                                      .getsecMobileNoController.text,
-                              email: contactProvider
-                                      .getemailController.text.isEmpty
-                                  ? widget.email
-                                  : contactProvider.getemailController.text,
-                              specialNote: contactProvider
-                                      .getspecialCommentController.text.isEmpty
-                                  ? widget.spNote
-                                  : contactProvider
-                                      .getspecialCommentController.text,
-                            );
-                          },
-                          btnName: 'Submite',
-                          fontColor: kdefWhiteColor,
-                          backgroundColor: kPrimaryBtn,
-                        ),
+                        child: contactProvider.getloadUpdateData
+                            ? const CommonPageLoader()
+                            : CommonBtn(
+                                onPress: () {
+                                  contactProvider.updateContactRec(
+                                    context,
+                                    firstName: widget.firstName,
+                                    lastName: contactProvider
+                                            .getlastnameController.text.isEmpty
+                                        ? widget.lastName
+                                        : contactProvider
+                                            .getlastnameController.text,
+                                    primaryMobileNo: contactProvider
+                                            .getpmobileNoController.text.isEmpty
+                                        ? widget.mobileNo1
+                                        : contactProvider
+                                            .getpmobileNoController.text,
+                                    secondoryNo: contactProvider
+                                            .getsecMobileNoController
+                                            .text
+                                            .isEmpty
+                                        ? widget.mobileNo2
+                                        : contactProvider
+                                            .getsecMobileNoController.text,
+                                    email: contactProvider
+                                            .getemailController.text.isEmpty
+                                        ? widget.email
+                                        : contactProvider
+                                            .getemailController.text,
+                                    specialNote: contactProvider
+                                            .getspecialCommentController
+                                            .text
+                                            .isEmpty
+                                        ? widget.spNote
+                                        : contactProvider
+                                            .getspecialCommentController.text,
+                                  );
+                                },
+                                btnName: 'Submite',
+                                fontColor: kdefWhiteColor,
+                                backgroundColor: kPrimaryBtn,
+                              ),
                       )
                     ],
                   ),

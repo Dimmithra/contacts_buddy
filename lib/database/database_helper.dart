@@ -95,18 +95,5 @@ class DataBaseHelper {
       return '$e';
       // dev.log('$e');
     }
-    // await db.update(
-    //   'contactdetails',
-    //   {
-    //     'firstName': firstName,
-    //     'age': lastName,
-    //     'primaryMobileNo': primaryMobileNo,
-    //     'secondoryNo': secondoryNo,
-    //     'email': email,
-    //     'specialNote': specialNote,
-    //   },
-    //   where: 'firstName = ?',
-    //   whereArgs: [firstName],
-    // );
   }
 }

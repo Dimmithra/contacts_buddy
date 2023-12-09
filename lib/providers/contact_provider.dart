@@ -3,6 +3,7 @@ import 'package:contacts_buddy/model/contact_model.dart';
 import 'package:contacts_buddy/pages/home/home.dart';
 import 'package:contacts_buddy/widgets/common_message.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'dart:developer' as dev;
 
@@ -26,6 +27,9 @@ class ContactProvider extends ChangeNotifier {
   TextEditingController specialCommentController = TextEditingController();
   TextEditingController get getspecialCommentController =>
       specialCommentController;
+
+  TextEditingController searchController = TextEditingController();
+  TextEditingController get getsearchController => searchController;
 
   Future<void> clearData(context) async {
     getfirstNameController.clear();
@@ -176,6 +180,13 @@ class ContactProvider extends ChangeNotifier {
 
   //update
 
+  bool loadUpdateData = false;
+  bool get getloadUpdateData => loadUpdateData;
+  setloadUpdateData(val) {
+    loadUpdateData = val;
+    notifyListeners();
+  }
+
   Future<void> updateContactRec(
     context, {
     required String firstName,
@@ -185,6 +196,7 @@ class ContactProvider extends ChangeNotifier {
     required String email,
     required String specialNote,
   }) async {
+    setloadUpdateData(true);
     try {
       var res = await DataBaseHelper().updateContactRecorde(firstName, lastName,
           primaryMobileNo, secondoryNo, email, specialNote);
@@ -215,6 +227,14 @@ class ContactProvider extends ChangeNotifier {
       }
     } catch (e) {
       dev.log('$e');
-    } finally {}
+    } finally {
+      setloadUpdateData(false);
+    }
+  }
+
+  Future<void> filterContact(context) async {
+    try {} catch (e) {
+      dev.log('$e');
+    }
   }
 }

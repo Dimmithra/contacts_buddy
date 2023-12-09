@@ -15,6 +15,8 @@ class CommonContactCard extends StatelessWidget {
     this.specialNote,
     required this.delete,
     required this.updateIcon,
+    this.mobile1,
+    this.mobile2,
   });
   final String title;
   final String? subTitle;
@@ -26,6 +28,8 @@ class CommonContactCard extends StatelessWidget {
   final String? specialNote;
   final Widget delete;
   final Widget updateIcon;
+  final Widget? mobile1;
+  final Widget? mobile2;
   @override
   Widget build(BuildContext context) {
     return ExpansionTileCard(
@@ -96,13 +100,26 @@ class CommonContactCard extends StatelessWidget {
                             color: kDefAppBarColor,
                           ),
                           child: updateIcon,
-                          // IconButton(
-                          //   onPressed: onpressUpdate,
-                          //   icon: const Icon(
-                          //     Icons.edit,
-                          //     color: kdefWhiteColor,
-                          //   ),
-                          // ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: kDefAppBarColor,
+                          ),
+                          child: mobile1,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: kDefAppBarColor,
+                          ),
+                          child: mobile2,
                         ),
                       ],
                     ),

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class CommonTextFeil extends StatelessWidget {
@@ -13,6 +11,8 @@ class CommonTextFeil extends StatelessWidget {
     this.fillColor,
     this.maxLength,
     this.textInputType,
+    this.suffixIcon,
+    this.onChanged,
   });
   final String hinttext;
   final String label;
@@ -22,11 +22,14 @@ class CommonTextFeil extends StatelessWidget {
   final TextEditingController? controller;
   final int? maxLength;
   final TextInputType? textInputType;
+  final Widget? suffixIcon;
+  final Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       maxLength: maxLength,
       keyboardType: textInputType,
+      onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hinttext,
         label: Text(
@@ -41,6 +44,7 @@ class CommonTextFeil extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
         ),
+        suffixIcon: suffixIcon,
       ),
       validator: (value) {
         if (validation == true) {
