@@ -7,6 +7,8 @@ import 'package:flutter/rendering.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'dart:developer' as dev;
 
+import 'package:url_launcher/url_launcher.dart';
+
 class ContactProvider extends ChangeNotifier {
   final db = DataBaseHelper();
   TextEditingController firstNameController = TextEditingController();
@@ -235,6 +237,17 @@ class ContactProvider extends ChangeNotifier {
   Future<void> filterContact(context) async {
     try {} catch (e) {
       dev.log('$e');
+    }
+  }
+
+  //launch number
+  Future<void> launchCaller(context, {String? contactNo}) async {
+    var url = "tel:$contactNo";
+    // "tel:1234567";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 }

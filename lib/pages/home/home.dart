@@ -68,17 +68,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               subTitle: contactProvider.data[index]
                                   ['primaryMobileNo'],
                               firstName:
-                                  'Firstname:${contactProvider.data[index]['firstName']}',
+                                  'F-Name:${contactProvider.data[index]['firstName']}',
                               lastName:
-                                  'Last name:${contactProvider.data[index]['lastName']}',
+                                  'L-Name:${contactProvider.data[index]['lastName']}',
                               pMobileNo:
-                                  'Mobile No 1:${contactProvider.data[index]['primaryMobileNo']}',
+                                  'M-1:${contactProvider.data[index]['primaryMobileNo']}',
                               secMobileNo:
-                                  'Mobile No 2:${contactProvider.data[index]['secondoryNo']}',
+                                  'M-2:${contactProvider.data[index]['secondoryNo']}',
                               email:
-                                  'Email:${contactProvider.data[index]['email']}',
+                                  'E:${contactProvider.data[index]['email']}',
                               specialNote:
-                                  'Special Note:${contactProvider.data[index]['specialNote']}',
+                                  'SpNote:${contactProvider.data[index]['specialNote']}',
                               delete: IconButton(
                                   onPressed: () {
                                     setState(() {
@@ -122,13 +122,65 @@ class _HomeScreenState extends State<HomeScreen> {
                                   size: 35,
                                 ),
                               ),
-                              mobile1: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.phone,
-                                    color: Colors.white,
-                                    size: 35,
-                                  )),
+                              mobile1: Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      contactProvider.launchCaller(context,
+                                          contactNo: contactProvider.data[index]
+                                              ['primaryMobileNo']);
+                                    },
+                                    icon: const Row(
+                                      children: [
+                                        Icon(
+                                          Icons.phone,
+                                          color: Colors.white,
+                                          size: 35,
+                                        ),
+                                        Text(
+                                          '1',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              mobile2: Column(
+                                children: [
+                                  if (contactProvider.data[index]
+                                          ['secondoryNo'] !=
+                                      '')
+                                    IconButton(
+                                      onPressed: () {
+                                        contactProvider.launchCaller(context,
+                                            contactNo: contactProvider
+                                                .data[index]['secondoryNo']);
+                                      },
+                                      icon: const Row(
+                                        children: [
+                                          Icon(
+                                            Icons.phone,
+                                            color: Colors.white,
+                                            size: 35,
+                                          ),
+                                          Text(
+                                            '2',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              ),
                             ),
                           ),
                         ],

@@ -38,19 +38,19 @@ class CommonContactCard extends StatelessWidget {
       subtitle: Text("$subTitle",
           style: TextStyle(color: Colors.white, fontSize: 18)),
       title: Text(title,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 24,
             fontWeight: FontWeight.bold,
           )),
       borderRadius: BorderRadius.circular(20),
       leading: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             color: Colors.grey[400],
           ),
-          child: Icon(Icons.person)),
+          child: const Icon(Icons.person)),
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,21 +62,45 @@ class CommonContactCard extends StatelessWidget {
                 children: [
                   Text(
                     '$firstName',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
                     '$lastName',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
                     '$pMobileNo',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
                     '$secMobileNo',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
                     '$email:',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
                     '$specialNote:',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -105,20 +129,20 @@ class CommonContactCard extends StatelessWidget {
                           width: 10,
                         ),
                         Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            color: kDefAppBarColor,
-                          ),
+                          // decoration: BoxDecoration(
+                          //   borderRadius: BorderRadius.circular(25),
+                          //   color: kDefAppBarColor,
+                          // ),
                           child: mobile1,
                         ),
                         const SizedBox(
                           width: 10,
                         ),
                         Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            color: kDefAppBarColor,
-                          ),
+                          // decoration: BoxDecoration(
+                          //   borderRadius: BorderRadius.circular(25),
+                          //   color: kDefAppBarColor,
+                          // ),
                           child: mobile2,
                         ),
                       ],

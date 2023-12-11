@@ -4,7 +4,6 @@ import 'package:contacts_buddy/utils/main_body.dart';
 import 'package:contacts_buddy/widgets/common_btn.dart';
 import 'package:contacts_buddy/widgets/common_loader.dart';
 import 'package:contacts_buddy/widgets/common_textfeild.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -62,10 +61,20 @@ class _EditeContactScreenState extends State<EditeContactScreen> {
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: [
-                      const Image(
-                        image: AssetImage('assets/images/edit.png'),
-                        fit: BoxFit.cover,
-                        height: 120,
+                      Container(
+                        decoration: BoxDecoration(
+                            // borderRadius: BorderRadius.circular(20),
+                            // border: Border.all(
+                            //   color: Colors.grey,
+                            // ),
+                            image: DecorationImage(
+                          image: AssetImage('assets/images/edit.png'),
+                        )),
+                        // child: const Image(
+                        //   image: AssetImage('assets/images/edit.png'),
+                        //   fit: BoxFit.cover,
+                        //   height: 120,
+                        // ),
                       ),
                       const SizedBox(
                         height: 10,
