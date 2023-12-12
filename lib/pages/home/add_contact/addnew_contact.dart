@@ -66,7 +66,7 @@ class _NewContactAddState extends State<NewContactAdd> {
                       child: CommonTextFeil(
                         hinttext: 'Last Name',
                         label: 'Last Name',
-                        validation: true,
+                        // validation: true,
                         controller: contactProvider.getlastnameController,
                       ),
                     ),

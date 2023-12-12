@@ -4,6 +4,7 @@ import 'package:contacts_buddy/pages/home/home.dart';
 import 'package:contacts_buddy/widgets/common_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'dart:convert';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'dart:developer' as dev;
 
@@ -234,10 +235,31 @@ class ContactProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> filterContact(context) async {
-    try {} catch (e) {
-      dev.log('$e');
+  List<ContactModel> contactModelList = [];
+  List<ContactModel> searchResult = [];
+  Future<void> onSearchTextChanged(context, {String? text}) async {
+    searchResult.clear();
+    if (text!.isEmpty) {
+      // setState(() {});
+      dev.log('$text');
+      commonMessage(context, errorTxt: 'errorTxt').show();
+      return;
+    } else {
+      contactModelList.forEach((contactDetail) {
+        if (contactDetail.firstName!.contains(text) ||
+            contactDetail.primaryMobileNo!.contains(text)) {
+          searchResult.add(contactDetail);
+        }
+      });
     }
+
+    // contactModelList.forEach((contactDetail) {
+    //   if (contactDetail.firstName!.contains(text) ||
+    //       contactDetail.primaryMobileNo!.contains(text)) {
+    //     searchResult.add(contactDetail);
+    //   }
+    // });
+    // setState(() {});
   }
 
   //launch number

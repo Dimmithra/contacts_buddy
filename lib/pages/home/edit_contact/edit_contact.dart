@@ -41,135 +41,134 @@ class _EditeContactScreenState extends State<EditeContactScreen> {
   Widget build(BuildContext context) {
     return MainBody(
       appBarColor: kDefAppBarColor,
-      title: widget.firstName,
+      title: "Edit Profile-${widget.firstName}",
       appbarTitleColor: kdefWhiteColor,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Consumer<ContactProvider>(
-            builder: (context, contactProvider, child) {
-              return SingleChildScrollView(
-                  child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: const Color.fromARGB(255, 223, 221, 221),
-                  border: Border.all(
-                    color: Colors.black,
-                  ),
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Consumer<ContactProvider>(
+          builder: (context, contactProvider, child) {
+            return SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            // borderRadius: BorderRadius.circular(20),
-                            // border: Border.all(
-                            //   color: Colors.grey,
-                            // ),
-                            image: DecorationImage(
-                          image: AssetImage('assets/images/edit.png'),
-                        )),
-                        // child: const Image(
-                        //   image: AssetImage('assets/images/edit.png'),
-                        //   fit: BoxFit.cover,
-                        //   height: 120,
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  Container(
+                    width: 100.0,
+                    height: 100.0,
+                    decoration: BoxDecoration(
+                        // borderRadius: BorderRadius.circular(10),
+                        // border: Border.all(
+                        //   color: Colors.grey,
                         // ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      CommonTextFeil(
-                        hinttext: widget.lastName,
-                        label: 'Last name: ${widget.lastName}',
-                        controller: contactProvider.getlastnameController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      CommonTextFeil(
-                        hinttext: widget.mobileNo1,
-                        label: 'Mobile No 1: ${widget.mobileNo1}',
-                        controller: contactProvider.getpmobileNoController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      CommonTextFeil(
-                        hinttext: widget.mobileNo2,
-                        label: 'Mobile No 2: ${widget.mobileNo2}',
-                        controller: contactProvider.getsecMobileNoController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      CommonTextFeil(
-                        hinttext: widget.email,
-                        label: 'Email: ${widget.email}',
-                        controller: contactProvider.getemailController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      CommonTextFeil(
-                        hinttext: widget.spNote,
-                        label: 'Special Note: ${widget.spNote}',
-                        controller: contactProvider.getspecialCommentController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: contactProvider.getloadUpdateData
-                            ? const CommonPageLoader()
-                            : CommonBtn(
-                                onPress: () {
-                                  contactProvider.updateContactRec(
-                                    context,
-                                    firstName: widget.firstName,
-                                    lastName: contactProvider
-                                            .getlastnameController.text.isEmpty
-                                        ? widget.lastName
-                                        : contactProvider
-                                            .getlastnameController.text,
-                                    primaryMobileNo: contactProvider
-                                            .getpmobileNoController.text.isEmpty
-                                        ? widget.mobileNo1
-                                        : contactProvider
-                                            .getpmobileNoController.text,
-                                    secondoryNo: contactProvider
-                                            .getsecMobileNoController
-                                            .text
-                                            .isEmpty
-                                        ? widget.mobileNo2
-                                        : contactProvider
-                                            .getsecMobileNoController.text,
-                                    email: contactProvider
-                                            .getemailController.text.isEmpty
-                                        ? widget.email
-                                        : contactProvider
-                                            .getemailController.text,
-                                    specialNote: contactProvider
-                                            .getspecialCommentController
-                                            .text
-                                            .isEmpty
-                                        ? widget.spNote
-                                        : contactProvider
-                                            .getspecialCommentController.text,
-                                  );
-                                },
-                                btnName: 'Submite',
-                                fontColor: kdefWhiteColor,
-                                backgroundColor: kPrimaryBtn,
-                              ),
-                      )
-                    ],
+                        image: DecorationImage(
+                            image: AssetImage(
+                              'assets/images/edit.png',
+                            ),
+                            fit: BoxFit.cover,
+                            scale: 20)),
+                    // child: const Image(
+                    //   image: AssetImage('assets/images/edit.png'),
+                    //   fit: BoxFit.cover,
+                    //   height: 120,
+                    // ),
                   ),
-                ),
-              ));
-            },
-          ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CommonTextFeil(
+                    hinttext: widget.lastName,
+                    label: 'First name: ${widget.firstName}',
+                    controller: contactProvider.getfirstNameController,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CommonTextFeil(
+                    hinttext: widget.lastName,
+                    label: 'Last name: ${widget.lastName}',
+                    controller: contactProvider.getlastnameController,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CommonTextFeil(
+                    hinttext: widget.mobileNo1,
+                    label: 'Mobile No 1: ${widget.mobileNo1}',
+                    controller: contactProvider.getpmobileNoController,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CommonTextFeil(
+                    hinttext: widget.mobileNo2,
+                    label: 'Mobile No 2: ${widget.mobileNo2}',
+                    controller: contactProvider.getsecMobileNoController,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CommonTextFeil(
+                    hinttext: widget.email,
+                    label: 'Email: ${widget.email}',
+                    controller: contactProvider.getemailController,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CommonTextFeil(
+                    hinttext: widget.spNote,
+                    label: 'Special Note: ${widget.spNote}',
+                    controller: contactProvider.getspecialCommentController,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: contactProvider.getloadUpdateData
+                        ? const CommonPageLoader()
+                        : CommonBtn(
+                            onPress: () {
+                              contactProvider.updateContactRec(
+                                context,
+                                firstName: widget.firstName,
+                                lastName: contactProvider
+                                        .getlastnameController.text.isEmpty
+                                    ? widget.lastName
+                                    : contactProvider
+                                        .getlastnameController.text,
+                                primaryMobileNo: contactProvider
+                                        .getpmobileNoController.text.isEmpty
+                                    ? widget.mobileNo1
+                                    : contactProvider
+                                        .getpmobileNoController.text,
+                                secondoryNo: contactProvider
+                                        .getsecMobileNoController.text.isEmpty
+                                    ? widget.mobileNo2
+                                    : contactProvider
+                                        .getsecMobileNoController.text,
+                                email: contactProvider
+                                        .getemailController.text.isEmpty
+                                    ? widget.email
+                                    : contactProvider.getemailController.text,
+                                specialNote: contactProvider
+                                        .getspecialCommentController
+                                        .text
+                                        .isEmpty
+                                    ? widget.spNote
+                                    : contactProvider
+                                        .getspecialCommentController.text,
+                              );
+                            },
+                            btnName: 'Submite',
+                            fontColor: kdefWhiteColor,
+                            backgroundColor: kPrimaryBtn,
+                          ),
+                  )
+                ],
+              ),
+            ));
+          },
         ),
       ),
     );

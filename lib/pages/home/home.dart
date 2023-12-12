@@ -37,232 +37,487 @@ class _HomeScreenState extends State<HomeScreen> {
       appBarColor: kDefAppBarColor,
       automaticallyImplyLeading: false,
       appbarTitleColor: Colors.white,
-      body: Consumer<ContactProvider>(
-        builder: (context, contactProvider, child) {
-          if (contactProvider.getloadHomeData) {
-            return const Center(child: CommonPageLoader());
-          }
-          return Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CommonTextFeil(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Colors.black,
+            // backgroundColor.withOpacity(.72),
+          ]),
+        ),
+        child: Consumer<ContactProvider>(
+          builder: (context, contactProvider, child) {
+            if (contactProvider.getloadHomeData) {
+              return const Center(child: CommonPageLoader());
+            }
+            return Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CommonTextFeil(
                     hinttext: 'Search',
                     label: 'Search',
-                    suffixIcon: Icon(
-                      Icons.search,
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 75),
-                child: ListView.builder(
-                    itemCount: contactProvider.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      // final item =
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: CommonContactCard(
-                              title: contactProvider.data[index]['firstName'],
-                              subTitle: contactProvider.data[index]
-                                  ['primaryMobileNo'],
-                              firstName:
-                                  'F-Name:${contactProvider.data[index]['firstName']}',
-                              lastName:
-                                  'L-Name:${contactProvider.data[index]['lastName']}',
-                              pMobileNo:
-                                  'M-1:${contactProvider.data[index]['primaryMobileNo']}',
-                              secMobileNo:
-                                  'M-2:${contactProvider.data[index]['secondoryNo']}',
-                              email:
-                                  'E:${contactProvider.data[index]['email']}',
-                              specialNote:
-                                  'SpNote:${contactProvider.data[index]['specialNote']}',
-                              delete: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      contactProvider.deleteRecord(
-                                        context,
-                                        mobileNo: contactProvider.data[index]
-                                            ['primaryMobileNo'],
-                                      );
-                                    });
-                                  },
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.white,
-                                    size: 35,
-                                  )),
-                              updateIcon: IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => EditeContactScreen(
-                                        firstName:
-                                            '${contactProvider.data[index]['firstName']}',
-                                        lastName:
-                                            '${contactProvider.data[index]['lastName']}',
-                                        mobileNo1:
-                                            '${contactProvider.data[index]['primaryMobileNo']}',
-                                        mobileNo2:
-                                            '${contactProvider.data[index]['secondoryNo']}',
-                                        email:
-                                            '${contactProvider.data[index]['email']}',
-                                        spNote:
-                                            '${contactProvider.data[index]['specialNote']}',
-                                      ),
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(
-                                  Icons.edit,
-                                  color: Colors.white,
-                                  size: 35,
-                                ),
-                              ),
-                              mobile1: Column(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      contactProvider.launchCaller(context,
-                                          contactNo: contactProvider.data[index]
-                                              ['primaryMobileNo']);
-                                    },
-                                    icon: const Row(
-                                      children: [
-                                        Icon(
-                                          Icons.phone,
-                                          color: Colors.white,
-                                          size: 35,
-                                        ),
-                                        Text(
-                                          '1',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              mobile2: Column(
-                                children: [
-                                  if (contactProvider.data[index]
-                                          ['secondoryNo'] !=
-                                      '')
-                                    IconButton(
-                                      onPressed: () {
-                                        contactProvider.launchCaller(context,
-                                            contactNo: contactProvider
-                                                .data[index]['secondoryNo']);
-                                      },
-                                      icon: const Row(
-                                        children: [
-                                          Icon(
-                                            Icons.phone,
-                                            color: Colors.white,
-                                            size: 35,
-                                          ),
-                                          Text(
-                                            '2',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
+                    controller: contactProvider.getsearchController,
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            // contactProvider.getsearchController.clear();
+                            contactProvider.onSearchTextChanged(
+                              context,
+                              text: contactProvider.getsearchController.text,
+                            );
+                          });
+                        },
+                        icon: Icon(Icons.search)),
+                    onChanged: (p0) {
+                      setState(() {
+                        contactProvider.onSearchTextChanged(context,
+                            text: contactProvider.getsearchController.text);
+                      });
+                    },
+                  ),
+                ),
+                Expanded(
+                    child: contactProvider.contactModelList != 0 ||
+                            contactProvider.getsearchController.text.isNotEmpty
+                        ? Padding(
+                            padding: EdgeInsets.only(top: 75),
+                            child: ListView.builder(
+                                itemCount: contactProvider.data.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  // final item =
+                                  return Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: CommonContactCard(
+                                          title: contactProvider.data[index]
+                                              ['firstName'],
+                                          subTitle: contactProvider.data[index]
+                                              ['primaryMobileNo'],
+                                          firstName:
+                                              'F-Name:${contactProvider.data[index]['firstName']}',
+                                          lastName:
+                                              'L-Name:${contactProvider.data[index]['lastName']}',
+                                          pMobileNo:
+                                              'M-1:${contactProvider.data[index]['primaryMobileNo']}',
+                                          secMobileNo:
+                                              'M-2:${contactProvider.data[index]['secondoryNo']}',
+                                          email:
+                                              'E:${contactProvider.data[index]['email']}',
+                                          specialNote:
+                                              'SpNote:${contactProvider.data[index]['specialNote']}',
+                                          delete: IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  contactProvider.deleteRecord(
+                                                    context,
+                                                    mobileNo: contactProvider
+                                                            .data[index]
+                                                        ['primaryMobileNo'],
+                                                  );
+                                                });
+                                              },
+                                              icon: const Icon(
+                                                Icons.delete,
+                                                color: Colors.white,
+                                                size: 35,
+                                              )),
+                                          updateIcon: IconButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditeContactScreen(
+                                                    firstName:
+                                                        '${contactProvider.data[index]['firstName']}',
+                                                    lastName:
+                                                        '${contactProvider.data[index]['lastName']}',
+                                                    mobileNo1:
+                                                        '${contactProvider.data[index]['primaryMobileNo']}',
+                                                    mobileNo2:
+                                                        '${contactProvider.data[index]['secondoryNo']}',
+                                                    email:
+                                                        '${contactProvider.data[index]['email']}',
+                                                    spNote:
+                                                        '${contactProvider.data[index]['specialNote']}',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            icon: const Icon(
+                                              Icons.edit,
                                               color: Colors.white,
+                                              size: 35,
                                             ),
                                           ),
-                                        ],
+                                          mobile1: Column(
+                                            children: [
+                                              IconButton(
+                                                onPressed: () {
+                                                  contactProvider.launchCaller(
+                                                      context,
+                                                      contactNo: contactProvider
+                                                              .data[index]
+                                                          ['primaryMobileNo']);
+                                                },
+                                                icon: const Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.phone,
+                                                      color: Colors.white,
+                                                      size: 35,
+                                                    ),
+                                                    Text(
+                                                      '1',
+                                                      style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          mobile2: Column(
+                                            children: [
+                                              if (contactProvider.data[index]
+                                                      ['secondoryNo'] !=
+                                                  '')
+                                                IconButton(
+                                                  onPressed: () {
+                                                    contactProvider.launchCaller(
+                                                        context,
+                                                        contactNo:
+                                                            contactProvider
+                                                                    .data[index]
+                                                                [
+                                                                'secondoryNo']);
+                                                  },
+                                                  icon: const Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.phone,
+                                                        color: Colors.white,
+                                                        size: 35,
+                                                      ),
+                                                      Text(
+                                                        '2',
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }),
-              ),
-            ],
-            // child: Padding(
-            //   padding: const EdgeInsets.all(5.0),
-            //   child: ListView.builder(
-            //       itemCount: contactProvider.data.length,
-            //       itemBuilder: (BuildContext context, int index) {
-            //         return Column(
-            //           children: [
-            //             Padding(
-            //               padding: const EdgeInsets.all(5.0),
-            //               child: CommonContactCard(
-            //                 title: contactProvider.data[index]['firstName'],
-            //                 subTitle: contactProvider.data[index]
-            //                     ['primaryMobileNo'],
-            //                 firstName:
-            //                     'Firstname:${contactProvider.data[index]['firstName']}',
-            //                 lastName:
-            //                     'Last name:${contactProvider.data[index]['lastName']}',
-            //                 pMobileNo:
-            //                     'Mobile No 1:${contactProvider.data[index]['primaryMobileNo']}',
-            //                 secMobileNo:
-            //                     'Mobile No 2:${contactProvider.data[index]['secondoryNo']}',
-            //                 email:
-            //                     'Email:${contactProvider.data[index]['email']}',
-            //                 specialNote:
-            //                     'Special Note:${contactProvider.data[index]['specialNote']}',
-            //                 delete: IconButton(
-            //                     onPressed: () {
-            //                       setState(() {
-            //                         contactProvider.deleteRecord(
-            //                           context,
-            //                           mobileNo: contactProvider.data[index]
-            //                               ['primaryMobileNo'],
-            //                         );
-            //                       });
-            //                     },
-            //                     icon: const Icon(
-            //                       Icons.delete,
-            //                       color: Colors.white,
-            //                       size: 35,
-            //                     )),
-            //                 updateIcon: IconButton(
-            //                     onPressed: () {
-            //                       Navigator.push(
-            //                         context,
-            //                         MaterialPageRoute(
-            //                           builder: (context) => EditeContactScreen(
-            //                             firstName:
-            //                                 '${contactProvider.data[index]['firstName']}',
-            //                             lastName:
-            //                                 '${contactProvider.data[index]['lastName']}',
-            //                             mobileNo1:
-            //                                 '${contactProvider.data[index]['primaryMobileNo']}',
-            //                             mobileNo2:
-            //                                 '${contactProvider.data[index]['secondoryNo']}',
-            //                             email:
-            //                                 '${contactProvider.data[index]['email']}',
-            //                             spNote:
-            //                                 '${contactProvider.data[index]['specialNote']}',
-            //                           ),
-            //                         ),
-            //                       );
-            //                     },
-            //                     icon: const Icon(
-            //                       Icons.edit,
-            //                       color: Colors.white,
-            //                       size: 35,
-            //                     )),
-            //               ),
-            //             ),
-            //           ],
-            //         );
-            //       }),
-            // ),
-          );
-        },
+                                    ],
+                                  );
+                                }),
+                          )
+                        : Padding(
+                            padding: EdgeInsets.only(top: 75),
+                            child: ListView.builder(
+                                itemCount: contactProvider.data.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  // final item =
+                                  return Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: CommonContactCard(
+                                          title: contactProvider.data[index]
+                                              ['firstName'],
+                                          subTitle: contactProvider.data[index]
+                                              ['primaryMobileNo'],
+                                          firstName:
+                                              'F-Name:${contactProvider.data[index]['firstName']}',
+                                          lastName:
+                                              'L-Name:${contactProvider.data[index]['lastName']}',
+                                          pMobileNo:
+                                              'M-1:${contactProvider.data[index]['primaryMobileNo']}',
+                                          secMobileNo:
+                                              'M-2:${contactProvider.data[index]['secondoryNo']}',
+                                          email:
+                                              'E:${contactProvider.data[index]['email']}',
+                                          specialNote:
+                                              'SpNote:${contactProvider.data[index]['specialNote']}',
+                                          delete: IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  contactProvider.deleteRecord(
+                                                    context,
+                                                    mobileNo: contactProvider
+                                                            .data[index]
+                                                        ['primaryMobileNo'],
+                                                  );
+                                                });
+                                              },
+                                              icon: const Icon(
+                                                Icons.delete,
+                                                color: Colors.white,
+                                                size: 35,
+                                              )),
+                                          updateIcon: IconButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditeContactScreen(
+                                                    firstName:
+                                                        '${contactProvider.data[index]['firstName']}',
+                                                    lastName:
+                                                        '${contactProvider.data[index]['lastName']}',
+                                                    mobileNo1:
+                                                        '${contactProvider.data[index]['primaryMobileNo']}',
+                                                    mobileNo2:
+                                                        '${contactProvider.data[index]['secondoryNo']}',
+                                                    email:
+                                                        '${contactProvider.data[index]['email']}',
+                                                    spNote:
+                                                        '${contactProvider.data[index]['specialNote']}',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            icon: const Icon(
+                                              Icons.edit,
+                                              color: Colors.white,
+                                              size: 35,
+                                            ),
+                                          ),
+                                          mobile1: Column(
+                                            children: [
+                                              IconButton(
+                                                onPressed: () {
+                                                  contactProvider.launchCaller(
+                                                      context,
+                                                      contactNo: contactProvider
+                                                              .data[index]
+                                                          ['primaryMobileNo']);
+                                                },
+                                                icon: const Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.phone,
+                                                      color: Colors.white,
+                                                      size: 35,
+                                                    ),
+                                                    Text(
+                                                      '1',
+                                                      style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          mobile2: Column(
+                                            children: [
+                                              if (contactProvider.data[index]
+                                                      ['secondoryNo'] !=
+                                                  '')
+                                                IconButton(
+                                                  onPressed: () {
+                                                    contactProvider.launchCaller(
+                                                        context,
+                                                        contactNo:
+                                                            contactProvider
+                                                                    .data[index]
+                                                                [
+                                                                'secondoryNo']);
+                                                  },
+                                                  icon: const Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.phone,
+                                                        color: Colors.white,
+                                                        size: 35,
+                                                      ),
+                                                      Text(
+                                                        '2',
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }),
+                          ))
+                // contactProvider.searchResult != 0 ||
+                //         contactProvider.getsearchController.text.isNotEmpty
+                //     ?
+                // Padding(
+                //     padding: EdgeInsets.only(top: 75),
+                //     child: ListView.builder(
+                //         itemCount: contactProvider.data.length,
+                //         itemBuilder: (BuildContext context, int index) {
+                //           // final item =
+                //           return Column(
+                //             children: [
+                //               Padding(
+                //                 padding: const EdgeInsets.all(5.0),
+                //                 child: CommonContactCard(
+                //                   title: contactProvider.data[index]
+                //                       ['firstName'],
+                //                   subTitle: contactProvider.data[index]
+                //                       ['primaryMobileNo'],
+                //                   firstName:
+                //                       'F-Name:${contactProvider.data[index]['firstName']}',
+                //                   lastName:
+                //                       'L-Name:${contactProvider.data[index]['lastName']}',
+                //                   pMobileNo:
+                //                       'M-1:${contactProvider.data[index]['primaryMobileNo']}',
+                //                   secMobileNo:
+                //                       'M-2:${contactProvider.data[index]['secondoryNo']}',
+                //                   email:
+                //                       'E:${contactProvider.data[index]['email']}',
+                //                   specialNote:
+                //                       'SpNote:${contactProvider.data[index]['specialNote']}',
+                //                   delete: IconButton(
+                //                       onPressed: () {
+                //                         setState(() {
+                //                           contactProvider.deleteRecord(
+                //                             context,
+                //                             mobileNo:
+                //                                 contactProvider.data[index]
+                //                                     ['primaryMobileNo'],
+                //                           );
+                //                         });
+                //                       },
+                //                       icon: const Icon(
+                //                         Icons.delete,
+                //                         color: Colors.white,
+                //                         size: 35,
+                //                       )),
+                //                   updateIcon: IconButton(
+                //                     onPressed: () {
+                //                       Navigator.push(
+                //                         context,
+                //                         MaterialPageRoute(
+                //                           builder: (context) =>
+                //                               EditeContactScreen(
+                //                             firstName:
+                //                                 '${contactProvider.data[index]['firstName']}',
+                //                             lastName:
+                //                                 '${contactProvider.data[index]['lastName']}',
+                //                             mobileNo1:
+                //                                 '${contactProvider.data[index]['primaryMobileNo']}',
+                //                             mobileNo2:
+                //                                 '${contactProvider.data[index]['secondoryNo']}',
+                //                             email:
+                //                                 '${contactProvider.data[index]['email']}',
+                //                             spNote:
+                //                                 '${contactProvider.data[index]['specialNote']}',
+                //                           ),
+                //                         ),
+                //                       );
+                //                     },
+                //                     icon: const Icon(
+                //                       Icons.edit,
+                //                       color: Colors.white,
+                //                       size: 35,
+                //                     ),
+                //                   ),
+                //                   mobile1: Column(
+                //                     children: [
+                //                       IconButton(
+                //                         onPressed: () {
+                //                           contactProvider.launchCaller(
+                //                               context,
+                //                               contactNo:
+                //                                   contactProvider.data[index]
+                //                                       ['primaryMobileNo']);
+                //                         },
+                //                         icon: const Row(
+                //                           children: [
+                //                             Icon(
+                //                               Icons.phone,
+                //                               color: Colors.white,
+                //                               size: 35,
+                //                             ),
+                //                             Text(
+                //                               '1',
+                //                               style: TextStyle(
+                //                                 fontSize: 18,
+                //                                 fontWeight: FontWeight.bold,
+                //                                 color: Colors.white,
+                //                               ),
+                //                             ),
+                //                           ],
+                //                         ),
+                //                       ),
+                //                     ],
+                //                   ),
+                //                   mobile2: Column(
+                //                     children: [
+                //                       if (contactProvider.data[index]
+                //                               ['secondoryNo'] !=
+                //                           '')
+                //                         IconButton(
+                //                           onPressed: () {
+                //                             contactProvider.launchCaller(
+                //                                 context,
+                //                                 contactNo: contactProvider
+                //                                         .data[index]
+                //                                     ['secondoryNo']);
+                //                           },
+                //                           icon: const Row(
+                //                             children: [
+                //                               Icon(
+                //                                 Icons.phone,
+                //                                 color: Colors.white,
+                //                                 size: 35,
+                //                               ),
+                //                               Text(
+                //                                 '2',
+                //                                 style: TextStyle(
+                //                                   fontSize: 18,
+                //                                   fontWeight: FontWeight.bold,
+                //                                   color: Colors.white,
+                //                                 ),
+                //                               ),
+                //                             ],
+                //                           ),
+                //                         ),
+                //                     ],
+                //                   ),
+                //                 ),
+                //               ),
+                //             ],
+                //           );
+                //         }),
+                //   )
+                // : Row(),
+              ],
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton.small(
         child: const Icon(Icons.add, size: 35),
