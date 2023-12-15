@@ -235,32 +235,30 @@ class ContactProvider extends ChangeNotifier {
     }
   }
 
-  List<ContactModel> contactModelList = [];
-  List<ContactModel> searchResult = [];
-  Future<void> onSearchTextChanged(context, {String? text}) async {
-    searchResult.clear();
-    if (text!.isEmpty) {
-      // setState(() {});
-      dev.log('$text');
-      commonMessage(context, errorTxt: 'errorTxt').show();
-      return;
-    } else {
-      contactModelList.forEach((contactDetail) {
-        if (contactDetail.firstName!.contains(text) ||
-            contactDetail.primaryMobileNo!.contains(text)) {
-          searchResult.add(contactDetail);
-        }
-      });
-    }
+  // List<ContactModel> contactModelList = [];
+  // List<ContactModel?> get getcontactModelList => contactModelList;
 
-    // contactModelList.forEach((contactDetail) {
-    //   if (contactDetail.firstName!.contains(text) ||
-    //       contactDetail.primaryMobileNo!.contains(text)) {
-    //     searchResult.add(contactDetail);
-    //   }
-    // });
-    // setState(() {});
-  }
+  // List<ContactModel> searchResult = [];
+  // List<ContactModel?> get getsearchResult => searchResult;
+  // Future<void> onSearchTextChanged(context, {required String text}) async {
+  //   // searchResult.clear();
+  //   List<Map<String, dynamic>> contactRecord = await db.getAllData();
+  //   dev.log('list: $contactRecord');
+  //   if (text.isEmpty) {
+  //     dev.log('input: $text');
+  //     commonMessage(context, errorTxt: 'search cannot be blank').show();
+  //   }
+  //   //  else {
+  //   getcontactModelList.forEach((contactDetail) {
+  //     if (contactDetail!.firstName!.contains(text) ||
+  //         contactDetail.primaryMobileNo!.contains(text)) {
+  //       // searchResult.add(contactDetail);
+  //       dev.log('input suucees: $text');
+  //       commonMessage(context, errorTxt: "$contactDetail").show();
+  //     }
+  //   });
+  //   // }
+  // }
 
   //launch number
   Future<void> launchCaller(context, {String? contactNo}) async {
@@ -271,5 +269,19 @@ class ContactProvider extends ChangeNotifier {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  String searchTerm = '';
+  // List<Map<String, dynamic>> filteredData = [];
+  String get getsearchTerm => searchTerm;
+  List<Map<String, dynamic>> get getfilteredData => data;
+
+  Future<void> filter({String? searchData}) async {
+    // var res = await DataBaseHelper().filterData(searchTerm: searchData);+
+    searchTerm = "$searchData";
+    data = await DataBaseHelper().filterData(searchTerm: "$searchData");
+    data.clear();
+    dev.log("filter $data");
+    notifyListeners();
   }
 }

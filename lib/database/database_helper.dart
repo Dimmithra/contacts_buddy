@@ -96,4 +96,17 @@ class DataBaseHelper {
       // dev.log('$e');
     }
   }
+
+  Future<List<Map<String, dynamic>>> filterData(
+      {required String searchTerm}) async {
+    dev.log("data bse: $searchTerm");
+    final Database database = await initDB();
+    List<Map<String, dynamic>> results = await database.query(
+      'contactdetails',
+      where: 'firstName||primaryMobileNo||lastName||email||secondoryNo LIKE ?',
+      whereArgs: ['%$searchTerm%'],
+    );
+    // database.close();
+    return results;
+  }
 }
