@@ -13,6 +13,8 @@ class CommonTextFeil extends StatelessWidget {
     this.textInputType,
     this.suffixIcon,
     this.onChanged,
+    this.labelColor,
+    this.hinttextColor,
   });
   final String hinttext;
   final String label;
@@ -24,6 +26,8 @@ class CommonTextFeil extends StatelessWidget {
   final TextInputType? textInputType;
   final Widget? suffixIcon;
   final Function(String)? onChanged;
+  final Color? labelColor;
+  final Color? hinttextColor;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -32,10 +36,14 @@ class CommonTextFeil extends StatelessWidget {
       onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hinttext,
+        hintStyle: TextStyle(
+          color: hinttextColor,
+        ),
         label: Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
+            color: labelColor,
           ),
         ),
         suffix: suffixicon,

@@ -12,8 +12,21 @@ void main() {
   ], child: const MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ContactProvider>(context, listen: false).loadTheme();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +36,11 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
+        // theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(useMaterial3: true),
+        themeMode: Provider.of<ContactProvider>(context).darkMode
+            ? ThemeMode.dark
+            : ThemeMode.light,
         home: const SplashScreen());
   }
 }

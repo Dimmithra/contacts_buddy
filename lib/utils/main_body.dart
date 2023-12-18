@@ -10,6 +10,8 @@ class MainBody extends StatefulWidget {
     this.appBarColor,
     this.appbarTitleColor,
     this.automaticallyImplyLeading = true,
+    this.drawer,
+    this.iconThemeColor,
   });
 
   final Widget body;
@@ -18,6 +20,8 @@ class MainBody extends StatefulWidget {
   final Color? appBarColor;
   final Color? appbarTitleColor;
   final bool automaticallyImplyLeading;
+  final Widget? drawer;
+  final Color? iconThemeColor;
   @override
   State<MainBody> createState() => _MainBodyState();
 }
@@ -26,9 +30,13 @@ class _MainBodyState extends State<MainBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: widget.drawer,
       appBar: AppBar(
         backgroundColor: widget.appBarColor,
         centerTitle: true,
+        iconTheme: IconThemeData(
+          color: widget.iconThemeColor ?? kdefWhiteColor,
+        ),
         automaticallyImplyLeading: widget.automaticallyImplyLeading,
         title: Text(
           widget.title,

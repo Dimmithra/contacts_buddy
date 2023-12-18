@@ -1,9 +1,11 @@
 import 'package:contacts_buddy/database/database_helper.dart';
 import 'package:contacts_buddy/model/contact_model.dart';
 import 'package:contacts_buddy/pages/home/home.dart';
+import 'package:contacts_buddy/utils/shared_pref.dart';
 import 'package:contacts_buddy/widgets/common_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'dart:developer' as dev;
@@ -12,6 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ContactProvider extends ChangeNotifier {
   final db = DataBaseHelper();
+  final storage = new FlutterSecureStorage();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController get getfirstNameController => firstNameController;
 
@@ -282,6 +285,39 @@ class ContactProvider extends ChangeNotifier {
     data = await DataBaseHelper().filterData(searchTerm: "$searchData");
     data.clear();
     dev.log("filter $data");
+    notifyListeners();
+  }
+
+  //darkmode and light mode change
+  // DarkThemeDataPrefs darkThemeDataPrefs = DarkThemeDataPrefs();
+  bool darkMode = false;
+  bool get getDarkTheme => darkMode;
+
+  // set setDarkTheme(bool value) {
+  //   if (darkMode == true) {
+  //     darkMode = value;
+  //     // darkThemeDataPrefs.setDarkTheme(value);
+  //     storage.write(key: kThemeStyle, value: "$value");
+  //     dev.log('$value');
+  //   } else if (darkMode == false) {
+  //     darkMode = value;
+  //     storage.write(key: kThemeStyle, value: '$value');
+  //     dev.log('$value');
+  //   }
+  //   notifyListeners();
+  // }
+
+  Future<void> loadTheme() async {
+    String? theme = await storage.read(key: kThemeStyle);
+    if (theme != null) {
+      darkMode = theme == 'dark';
+    }
+    notifyListeners();
+  }
+
+  Future<void> toggleTheme() async {
+    darkMode = !darkMode;
+    await storage.write(key: kThemeStyle, value: darkMode ? 'dark' : 'light');
     notifyListeners();
   }
 }

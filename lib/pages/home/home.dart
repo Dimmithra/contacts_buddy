@@ -1,16 +1,19 @@
+import 'dart:io';
+
 import 'package:contacts_buddy/pages/home/add_contact/addnew_contact.dart';
 import 'package:contacts_buddy/pages/home/contact_Details/contact_Details.dart';
 import 'package:contacts_buddy/pages/home/edit_contact/edit_contact.dart';
 import 'package:contacts_buddy/utils/colors.dart';
 import 'package:contacts_buddy/utils/main_body.dart';
+import 'package:contacts_buddy/widgets/common_btn.dart';
 import 'package:contacts_buddy/widgets/common_card.dart';
 import 'package:contacts_buddy/widgets/common_contact_card.dart';
 import 'package:contacts_buddy/widgets/common_loader.dart';
 import 'package:contacts_buddy/widgets/common_message.dart';
 import 'package:contacts_buddy/widgets/common_textfeild.dart';
+import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:contacts_buddy/providers/contact_provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,15 +38,108 @@ class _HomeScreenState extends State<HomeScreen> {
     return MainBody(
       title: 'Welcome',
       appBarColor: kDefAppBarColor,
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: true,
       appbarTitleColor: Colors.white,
+      drawer: Consumer<ContactProvider>(
+        builder: (context, contactProvider, child) {
+          return Drawer(
+            child: Column(
+              children: [
+                UserAccountsDrawerHeader(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/images/drawer_image_light_mode.jpg',
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  accountEmail: const Text(''),
+                  accountName: Container(
+                    child: Text(
+                      "Welcome",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  currentAccountPicture: Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/user_image.png'),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ExpansionTileCard(
+                      title: const Text('Settings',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      children: [
+                        Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Change Mode'),
+                                  Switch(
+                                    value: contactProvider.getDarkTheme,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        contactProvider.toggleTheme();
+                                      });
+                                    },
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                      finalPadding: EdgeInsets.all(10)),
+                ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: CommonBtn(
+                        backgroundColor: contactProvider.darkMode
+                            ? Colors.lightBlue
+                            : Colors.grey,
+                        fontColor: kdefWhiteColor,
+                        onPress: () {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => exit(0),
+                            ),
+                            (route) => false,
+                          );
+                        },
+                        btnName: 'Close'),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
       body: Container(
         decoration: BoxDecoration(
-            // gradient: LinearGradient(colors: [
-            //   // Colors.black,
-            //   // backgroundColor.withOpacity(.72),
-            // ]),
-            ),
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 227, 226, 226),
+              Colors.white,
+            ],
+          ),
+        ),
         child: Consumer<ContactProvider>(
           builder: (context, contactProvider, child) {
             if (contactProvider.getloadHomeData) {
@@ -56,7 +152,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CommonTextFeil(
                     hinttext: 'Search',
                     label: 'Search',
+                    hinttextColor:
+                        contactProvider.darkMode ? Colors.black : Colors.black,
+                    labelColor:
+                        contactProvider.darkMode ? Colors.black : Colors.black,
                     controller: contactProvider.getsearchController,
+                    fillColor: contactProvider.darkMode
+                        ? Colors.white
+                        : kdefWhiteColor,
                     suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
@@ -89,20 +192,35 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: CommonContactCard(
+                                    baseColor: contactProvider.darkMode
+                                        ? kDefAppBarColor
+                                        : kdefWhiteColor,
+                                    expandedColor: contactProvider.darkMode
+                                        ? kDefAppBarColor
+                                        : kdefWhiteColor,
+                                    iconColor: contactProvider.darkMode
+                                        ? kdefWhiteColor
+                                        : kDefAppBarColor,
+                                    titleColor: contactProvider.darkMode
+                                        ? kdefWhiteColor
+                                        : kDefAppBarColor,
+                                    subTitleColor: contactProvider.darkMode
+                                        ? kdefWhiteColor
+                                        : kDefAppBarColor,
                                     title: contactProvider.data[index]
                                         ['firstName'],
                                     subTitle: contactProvider.data[index]
                                         ['primaryMobileNo'],
                                     firstName:
-                                        'F-Name:${contactProvider.data[index]['firstName']}',
+                                        '${contactProvider.data[index]['firstName']}',
                                     lastName:
-                                        'L-Name:${contactProvider.data[index]['lastName']}',
+                                        '${contactProvider.data[index]['lastName']}',
                                     pMobileNo:
-                                        'M-1:${contactProvider.data[index]['primaryMobileNo']}',
+                                        ':${contactProvider.data[index]['primaryMobileNo']}',
                                     secMobileNo:
-                                        'M-2:${contactProvider.data[index]['secondoryNo']}',
+                                        ':${contactProvider.data[index]['secondoryNo']}',
                                     email:
-                                        'E:${contactProvider.data[index]['email']}',
+                                        '${contactProvider.data[index]['email']}',
                                     specialNote:
                                         'SpNote:${contactProvider.data[index]['specialNote']}',
                                     delete: IconButton(
@@ -164,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             children: [
                                               Icon(
                                                 Icons.phone,
-                                                color: Colors.white,
+                                                color: kPrimaryBtn,
                                                 size: 35,
                                               ),
                                               Text(
@@ -172,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
+                                                  color: kPrimaryBtn,
                                                 ),
                                               ),
                                             ],
@@ -197,7 +315,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               children: [
                                                 Icon(
                                                   Icons.phone,
-                                                  color: Colors.white,
+                                                  color: kDefTextColor,
                                                   size: 35,
                                                 ),
                                                 Text(
@@ -205,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
+                                                    color: kDefTextColor,
                                                   ),
                                                 ),
                                               ],

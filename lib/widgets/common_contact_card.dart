@@ -17,6 +17,12 @@ class CommonContactCard extends StatelessWidget {
     required this.updateIcon,
     this.mobile1,
     this.mobile2,
+    this.baseColor,
+    this.expandedColor,
+    this.iconColor,
+    this.mainIconColors,
+    this.titleColor,
+    this.subTitleColor,
   });
   final String title;
   final String? subTitle;
@@ -30,16 +36,26 @@ class CommonContactCard extends StatelessWidget {
   final Widget updateIcon;
   final Widget? mobile1;
   final Widget? mobile2;
+  final Color? baseColor;
+  final Color? expandedColor;
+  final Color? iconColor;
+  final Color? mainIconColors;
+  final Color? titleColor;
+  final Color? subTitleColor;
   @override
   Widget build(BuildContext context) {
     return ExpansionTileCard(
-      baseColor: Color.fromARGB(255, 0, 60, 255),
-      expandedColor: Colors.blue,
+      baseColor: baseColor,
+      expandedColor: expandedColor,
       subtitle: Text("$subTitle",
-          style: TextStyle(color: Colors.white, fontSize: 18)),
+          style: TextStyle(
+            color: subTitleColor,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          )),
       title: Text(title,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: titleColor,
             fontSize: 24,
             fontWeight: FontWeight.bold,
           )),
@@ -50,7 +66,10 @@ class CommonContactCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
             color: Colors.grey[400],
           ),
-          child: const Icon(Icons.person)),
+          child: Icon(
+            Icons.person,
+            color: mainIconColors,
+          )),
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,40 +79,87 @@ class CommonContactCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '$firstName',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.person,
+                      ),
+                      Text(
+                        '$firstName $lastName',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    '$lastName',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.phone,
+                          ),
+                          Text(
+                            '1',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            '$pMobileNo',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Text(
-                    '$pMobileNo',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.phone,
+                          ),
+                          Text(
+                            '2',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            '$secMobileNo',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Text(
-                    '$secMobileNo',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '$email:',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    children: [
+                      Icon(Icons.email),
+                      Text(
+                        '$email:',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                   Text(
                     '$specialNote:',

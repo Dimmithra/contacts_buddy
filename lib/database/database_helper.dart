@@ -99,7 +99,7 @@ class DataBaseHelper {
 
   Future<List<Map<String, dynamic>>> filterData(
       {required String searchTerm}) async {
-    dev.log("data bse: $searchTerm");
+    // dev.log("data bse: $searchTerm");
     final Database database = await initDB();
     List<Map<String, dynamic>> results = await database.query(
       'contactdetails',
