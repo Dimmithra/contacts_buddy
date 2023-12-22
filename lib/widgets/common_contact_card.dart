@@ -23,6 +23,7 @@ class CommonContactCard extends StatelessWidget {
     this.mainIconColors,
     this.titleColor,
     this.subTitleColor,
+    this.share,
   });
   final String title;
   final String? subTitle;
@@ -42,6 +43,7 @@ class CommonContactCard extends StatelessWidget {
   final Color? mainIconColors;
   final Color? titleColor;
   final Color? subTitleColor;
+  final Function()? share;
   @override
   Widget build(BuildContext context) {
     return ExpansionTileCard(
@@ -211,6 +213,7 @@ class CommonContactCard extends StatelessWidget {
                           // ),
                           child: mobile2,
                         ),
+                        IconButton(onPressed: share, icon: Icon(Icons.share))
                       ],
                     ),
                   )

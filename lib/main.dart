@@ -6,10 +6,15 @@ import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => SplashProvider()),
-    ChangeNotifierProvider(create: (_) => ContactProvider()),
-  ], child: const MyApp()));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => SplashProvider()),
+        ChangeNotifierProvider(create: (_) => ContactProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -36,7 +41,6 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        // theme: ThemeData.light(),
         darkTheme: ThemeData.dark(useMaterial3: true),
         themeMode: Provider.of<ContactProvider>(context).darkMode
             ? ThemeMode.dark

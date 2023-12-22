@@ -331,6 +331,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                       ],
                                     ),
+                                    share: () {
+                                      contactProvider.onShare(context,
+                                          text: 'text');
+                                    },
                                   ),
                                 ),
                               ],

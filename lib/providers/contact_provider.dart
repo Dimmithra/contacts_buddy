@@ -8,6 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:share_plus/share_plus.dart';
 import 'dart:developer' as dev;
 
 import 'package:url_launcher/url_launcher.dart';
@@ -319,5 +320,12 @@ class ContactProvider extends ChangeNotifier {
     darkMode = !darkMode;
     await storage.write(key: kThemeStyle, value: darkMode ? 'dark' : 'light');
     notifyListeners();
+  }
+
+  Future<void> onShare(BuildContext context, {required String text}) async {
+    final box = context.findRenderObject() as RenderBox?;
+    await Share.share(text,
+        subject: 'link',
+        sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
   }
 }
