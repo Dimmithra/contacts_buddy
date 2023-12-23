@@ -38,7 +38,9 @@ class DataBaseHelper {
     try {
       final Database db = await initDB();
       var res = await db.insert("contactdetails", contactModel.toMap());
-      dev.log(res.toString());
+      dev.log(
+        res.toString(),
+      );
       return 'success';
     } catch (e) {
       return 'This Mobile Number alredy Registered';

@@ -31,17 +31,83 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height,
                   initialPage: 0,
-                  indicatorColor: Colors.blue,
+                  indicatorColor: const Color.fromARGB(255, 0, 88, 160),
                   indicatorBackgroundColor: Colors.grey,
                   children: [
-                    Image.asset(
-                      'assets/images/welcome_image_1.png',
-                      // fit: BoxFit.cover,
+                    Center(
+                      child: Container(
+                        color: Colors.white,
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              'assets/images/welcome_image_1.gif',
+                              fit: BoxFit.cover,
+                            ),
+                            SizedBox(
+                              height: 50,
+                            ),
+                            Text(
+                              'Welcome aboard! \n Explore seamlessly with our app',
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ),
+                      ),
                     ),
-                    Image.asset(
-                      'assets/images/welcome_image_2.png',
-                      // scale: 50,
-                      // fit: BoxFit.cover,
+                    Center(
+                      child: Container(
+                        color: Colors.white,
+                        padding: EdgeInsets.all(15),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/images/share.gif',
+                                    fit: BoxFit.cover,
+                                    // width: 1,
+                                    scale: 2,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Image.asset(
+                                    'assets/images/save.gif',
+                                    fit: BoxFit.cover,
+                                    scale: 2,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Image.asset(
+                                    'assets/images/darkmode.gif',
+                                    fit: BoxFit.cover,
+                                    scale: 2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 5,
+                            ),
+                            Text(
+                              'Easily save and share contacts with a tap. Customize your experience with seamless dark and light themes.',
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color: Color.fromARGB(255, 12, 44, 70),
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                     InkWell(
                       onTap: () {
@@ -54,14 +120,29 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         //   ),
                         // );
                       },
-                      child: Image.asset(
-                        'assets/images/welcome_image_1.png',
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/welcome_image3.png',
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 5,
+                          ),
+                          Text(
+                            'Let s get started!',
+                            style: TextStyle(
+                                fontSize: 25,
+                                color: Color.fromARGB(255, 7, 138, 245),
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          )
+                        ],
                       ),
                     )
                   ],
-                  // onPageChanged: (value) {
-                  //   print('Page changed: $value');
-                  // },
+                  onPageChanged: (value) {
+                    // print('Page changed: $value');
+                  },
                   autoPlayInterval: 3000,
                   isLoop: true,
                 ),

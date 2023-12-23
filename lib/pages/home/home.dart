@@ -332,8 +332,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ],
                                     ),
                                     share: () {
-                                      contactProvider.onShare(context,
-                                          text: 'text');
+                                      contactProvider.onShare(
+                                        context,
+                                        fname: contactProvider.data[index]
+                                            ['firstName'],
+                                        lname: contactProvider.data[index]
+                                            ['lastName'],
+                                        mobile1: contactProvider.data[index]
+                                            ['primaryMobileNo'],
+                                        mobile2: contactProvider.data[index]
+                                            ['secondoryNo'],
+                                      );
                                     },
                                   ),
                                 ),

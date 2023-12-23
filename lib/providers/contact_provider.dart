@@ -132,10 +132,17 @@ class ContactProvider extends ChangeNotifier {
   Future<void> loadAllContactRecords(context) async {
     setloadHomeData(true);
     try {
-      setcontactModel(null);
+      // setcontactModel(null);
       List<Map<String, dynamic>> contactRecord = await db.getAllData();
       data.clear();
       data.addAll(contactRecord);
+      // data.sort((a, b) {
+      //   final String nameA = a['lastName'].toString().toLowerCase();
+      //   final String nameB = b['lastName'].toString().toLowerCase();
+      //   return nameA.compareTo(nameB);
+      // });
+      // data.sort((a, b) =>
+      //     (a['lastName'] as String).compareTo(b['lastName'] as String));
     } catch (e) {
       dev.log(e.toString());
     } finally {
@@ -289,24 +296,8 @@ class ContactProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  //darkmode and light mode change
-  // DarkThemeDataPrefs darkThemeDataPrefs = DarkThemeDataPrefs();
   bool darkMode = false;
   bool get getDarkTheme => darkMode;
-
-  // set setDarkTheme(bool value) {
-  //   if (darkMode == true) {
-  //     darkMode = value;
-  //     // darkThemeDataPrefs.setDarkTheme(value);
-  //     storage.write(key: kThemeStyle, value: "$value");
-  //     dev.log('$value');
-  //   } else if (darkMode == false) {
-  //     darkMode = value;
-  //     storage.write(key: kThemeStyle, value: '$value');
-  //     dev.log('$value');
-  //   }
-  //   notifyListeners();
-  // }
 
   Future<void> loadTheme() async {
     String? theme = await storage.read(key: kThemeStyle);
@@ -322,10 +313,15 @@ class ContactProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> onShare(BuildContext context, {required String text}) async {
-    final box = context.findRenderObject() as RenderBox?;
-    await Share.share(text,
-        subject: 'link',
-        sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+//share contact record
+  Future<void> onShare(
+    BuildContext context, {
+    String? fname,
+    String? lname,
+    String? mobile1,
+    String? mobile2,
+  }) async {
+    await Share.share("$fname $lname \n ${mobile1!} \n ${mobile2!}",
+        subject: 'Share Contact Number');
   }
 }

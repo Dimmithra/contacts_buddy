@@ -99,17 +99,17 @@ class CommonContactCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.phone,
                           ),
-                          Text(
+                          const Text(
                             '1',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
@@ -127,17 +127,17 @@ class CommonContactCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.phone,
                           ),
-                          Text(
+                          const Text(
                             '2',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
@@ -153,9 +153,9 @@ class CommonContactCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Icon(Icons.email),
+                      const Icon(Icons.email),
                       Text(
-                        '$email:',
+                        '$email',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -164,7 +164,7 @@ class CommonContactCard extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    '$specialNote:',
+                    '$specialNote',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -213,7 +213,8 @@ class CommonContactCard extends StatelessWidget {
                           // ),
                           child: mobile2,
                         ),
-                        IconButton(onPressed: share, icon: Icon(Icons.share))
+                        IconButton(
+                            onPressed: share, icon: const Icon(Icons.share))
                       ],
                     ),
                   )
