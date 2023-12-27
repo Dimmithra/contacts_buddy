@@ -30,106 +30,116 @@ class _NewContactAddState extends State<NewContactAdd> {
         title: 'New Contact',
         appBarColor: kDefAppBarColor,
         appbarTitleColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Form(
-            key: formKey,
-            child: Consumer<ContactProvider>(
-              builder: (context, contactProvider, child) {
-                return Column(
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 150.0,
-                          width: 150.0,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/contact_person.png'),
-                              fit: BoxFit.fill,
-                            ),
-                            shape: BoxShape.circle,
-                          ),
-                          //
-                        )),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CommonTextFeil(
-                        hinttext: 'First Name',
-                        label: 'First Name',
-                        validation: true,
-                        controller: contactProvider.firstNameController,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CommonTextFeil(
-                        hinttext: 'Last Name',
-                        label: 'Last Name',
-                        // validation: true,
-                        controller: contactProvider.getlastnameController,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CommonTextFeil(
-                        hinttext: 'Primary Mobile Number',
-                        label: 'Primary Mobile Number',
-                        validation: true,
-                        maxLength: 15,
-                        textInputType: TextInputType.number,
-                        controller: contactProvider.getpmobileNoController,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CommonTextFeil(
-                        hinttext: 'Secondary Mobile Number',
-                        label: 'Secondary Mobile Number',
-                        maxLength: 15,
-                        textInputType: TextInputType.number,
-                        controller: contactProvider.getsecMobileNoController,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CommonTextFeil(
-                        hinttext: 'Email',
-                        label: 'Email',
-                        controller: contactProvider.emailController,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CommonTextFeil(
-                        hinttext: 'Special Note',
-                        label: 'Special Note',
-                        controller: contactProvider.getspecialCommentController,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: contactProvider.getloadSaveData
-                            ? const CommonPageLoader()
-                            : CommonBtn(
-                                backgroundColor: kPrimaryBtn,
-                                onPress: () {
-                                  setState(() {
-                                    if (formKey.currentState!.validate()) {
-                                      contactProvider.createAccount(context);
-                                    }
-                                  });
-                                },
-                                btnName: 'Done',
-                                fontColor: Colors.white,
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: Consumer<ContactProvider>(
+                builder: (context, contactProvider, child) {
+                  return Column(
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 150.0,
+                            width: 150.0,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/contact_person.png'),
+                                fit: BoxFit.fill,
                               ),
+                              shape: BoxShape.circle,
+                            ),
+                            //
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CommonTextFeil(
+                          hinttext: 'First Name',
+                          label: 'First Name',
+                          validation: true,
+                          controller: contactProvider.firstNameController,
+                        ),
                       ),
-                    )
-                  ],
-                );
-              },
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CommonTextFeil(
+                          hinttext: 'Last Name',
+                          label: 'Last Name',
+                          // validation: true,
+                          controller: contactProvider.getlastnameController,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CommonTextFeil(
+                          hinttext: 'Primary Mobile Number',
+                          label: 'Primary Mobile Number',
+                          validation: true,
+                          mobileNoValidater: true,
+                          maxLength: 12,
+                          textInputType: TextInputType.number,
+                          controller: contactProvider.getpmobileNoController,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CommonTextFeil(
+                          hinttext: 'Secondary Mobile Number',
+                          label: 'Secondary Mobile Number',
+                          mobileNoValidater: true,
+                          // validation: true,
+                          maxLength: 12,
+                          textInputType: TextInputType.number,
+                          controller: contactProvider.getsecMobileNoController,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CommonTextFeil(
+                          hinttext: 'Email',
+                          label: 'Email',
+                          emailValidation: true,
+                          // validation: true,
+                          controller: contactProvider.emailController,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CommonTextFeil(
+                          hinttext: 'Special Note',
+                          label: 'Special Note',
+                          controller:
+                              contactProvider.getspecialCommentController,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: contactProvider.getloadSaveData
+                              ? const CommonPageLoader()
+                              : CommonBtn(
+                                  backgroundColor: kPrimaryBtn,
+                                  onPress: () {
+                                    setState(() {
+                                      if (formKey.currentState!.validate()) {
+                                        // contactProvider.createAccount(context);
+                                        contactProvider.createAccount(context);
+                                      }
+                                    });
+                                  },
+                                  btnName: 'Done',
+                                  fontColor: Colors.white,
+                                ),
+                        ),
+                      )
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         ));

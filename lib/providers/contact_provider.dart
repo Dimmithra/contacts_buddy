@@ -1,11 +1,16 @@
+import 'dart:ffi';
+
 import 'package:contacts_buddy/database/database_helper.dart';
 import 'package:contacts_buddy/model/contact_model.dart';
 import 'package:contacts_buddy/pages/home/home.dart';
+import 'package:contacts_buddy/utils/colors.dart';
 import 'package:contacts_buddy/utils/shared_pref.dart';
 import 'package:contacts_buddy/widgets/common_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'dart:convert';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:share_plus/share_plus.dart';
@@ -47,22 +52,6 @@ class ContactProvider extends ChangeNotifier {
     getspecialCommentController.clear();
   }
 
-  // createContact
-  // Future<void> validation(context) async {
-  //   Pattern reg = r'/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/';
-  //   RegExp regex = RegExp(reg.toString());
-  //   try {
-  //     if (!regex.hasMatch(getmobileNoController.text)) {
-  //       commonMessage(context, errorTxt: 'Mobile Number Formate Invalide')
-  //           .show();
-  //     } else {
-  //       dev.log('message');
-  //     }
-  //   } catch (e) {
-  //     dev.log(e.toString());
-  //   }
-  // }
-
   bool loadSaveData = false;
   bool get getloadSaveData => loadSaveData;
   setloadSaveData(val) {
@@ -101,6 +90,7 @@ class ContactProvider extends ChangeNotifier {
             btnType: 3,
             buttons: [
               DialogButton(
+                color: kPrimaryBtn,
                 child:
                     const Text("okay", style: TextStyle(color: Colors.white)),
                 onPressed: () {
@@ -165,11 +155,17 @@ class ContactProvider extends ChangeNotifier {
       if (res == 'success') {
         commonMessage(
           context,
-          errorTxt: 'Delete Contact recode Succes Success',
+          errorTxt: 'Contact record Delete Succes Success',
           btnType: 3,
           buttons: [
             DialogButton(
-              child: const Text('Okay'),
+              color: kPrimaryBtn,
+              child: const Text(
+                'Okay',
+                style: TextStyle(
+                  color: kdefWhiteColor,
+                ),
+              ),
               onPressed: () {
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -221,7 +217,13 @@ class ContactProvider extends ChangeNotifier {
           btnType: 3,
           buttons: [
             DialogButton(
-              child: const Text('Okay'),
+              color: kPrimaryBtn,
+              child: const Text(
+                'Okay',
+                style: TextStyle(
+                  color: kdefWhiteColor,
+                ),
+              ),
               onPressed: () {
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -324,4 +326,22 @@ class ContactProvider extends ChangeNotifier {
     await Share.share("$fname $lname \n ${mobile1!} \n ${mobile2!}",
         subject: 'Share Contact Number');
   }
+
+  // appversion
+  PackageInfo packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: '',
+    buildNumber: 'Unknown',
+    buildSignature: 'Unknown',
+    installerStore: 'Unknown',
+  );
+  Future<void> initPackageInfo(context) async {
+    final info = await PackageInfo.fromPlatform();
+    packageInfo = info;
+  }
+
+  // var date = DateTime.now();
+  String time = DateFormat("HH:mm:ss").format(DateTime.now());
+  String date = DateFormat("yyyy-MM-dd").format(DateTime.now());
 }

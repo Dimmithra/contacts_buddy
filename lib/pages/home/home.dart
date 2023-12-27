@@ -15,6 +15,7 @@ import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:contacts_buddy/providers/contact_provider.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,6 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ContactProvider>(context, listen: false)
           .loadAllContactRecords(context);
+      Provider.of<ContactProvider>(context, listen: false)
+          .initPackageInfo(context);
     });
     super.initState();
   }
@@ -108,23 +111,50 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: CommonBtn(
-                        backgroundColor: contactProvider.darkMode
-                            ? Colors.lightBlue
-                            : Colors.grey,
-                        fontColor: kdefWhiteColor,
-                        onPress: () {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => exit(0),
+                      width: MediaQuery.of(context).size.width,
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              contactProvider.time,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            (route) => false,
-                          );
-                        },
-                        btnName: 'Close'),
-                  ),
+                            Text(
+                              contactProvider.date,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Version ${contactProvider.packageInfo.version}',
+                              style: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                      // CommonBtn(
+                      //     backgroundColor: contactProvider.darkMode
+                      //         ? Colors.lightBlue
+                      //         : Colors.grey,
+                      //     fontColor: kdefWhiteColor,
+                      //     onPress: () {
+                      //       Navigator.pushAndRemoveUntil(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //           builder: (context) => exit(0),
+                      //         ),
+                      //         (route) => false,
+                      //       );
+                      //     },
+                      //     btnName: 'Close'),
+                      ),
                 )
               ],
             ),
@@ -132,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color.fromARGB(255, 227, 226, 226),
@@ -179,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 75),
+                  padding: const EdgeInsets.only(top: 75),
                   child: FutureBuilder<void>(
                     future: contactProvider.filter(
                         searchData: contactProvider.searchTerm),
@@ -226,12 +256,40 @@ class _HomeScreenState extends State<HomeScreen> {
                                     delete: IconButton(
                                         onPressed: () {
                                           setState(() {
-                                            contactProvider.deleteRecord(
-                                              context,
-                                              mobileNo:
-                                                  contactProvider.data[index]
-                                                      ['primaryMobileNo'],
-                                            );
+                                            commonMessage(context,
+                                                errorTxt:
+                                                    'Are you sure you Delete this message',
+                                                btnType: 3,
+                                                buttons: [
+                                                  DialogButton(
+                                                    color: kDeleteColor,
+                                                    child: const Text("Delete",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white)),
+                                                    onPressed: () {
+                                                      (context);
+                                                      contactProvider
+                                                          .deleteRecord(
+                                                        context,
+                                                        mobileNo: contactProvider
+                                                                .data[index]
+                                                            ['primaryMobileNo'],
+                                                      );
+                                                    },
+                                                  ),
+                                                  DialogButton(
+                                                    color: kPrimaryBtn,
+                                                    child: const Text("cancel",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white)),
+                                                    onPressed: () {
+                                                      (context);
+                                                      Navigator.pop(context);
+                                                    },
+                                                  )
+                                                ]).show();
                                           });
                                         },
                                         icon: const Icon(

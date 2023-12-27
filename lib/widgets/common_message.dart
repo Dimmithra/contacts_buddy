@@ -54,9 +54,7 @@ Alert commonMessage(
           Text(
             errorTxt,
             style: const TextStyle(
-              fontSize: 17,
-              height: 1.5,
-            ),
+                fontSize: 17, height: 1.5, color: kDefTextColor),
             textAlign: TextAlign.center,
           )
         ],
