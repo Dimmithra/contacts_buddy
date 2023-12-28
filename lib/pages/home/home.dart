@@ -253,12 +253,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                         '${contactProvider.data[index]['email']}',
                                     specialNote:
                                         'SpNote:${contactProvider.data[index]['specialNote']}',
+                                    //delete button
                                     delete: IconButton(
                                         onPressed: () {
                                           setState(() {
                                             commonMessage(context,
                                                 errorTxt:
-                                                    'Are you sure you Delete this message',
+                                                    'Are you sure you Delete this ${contactProvider.data[index]['primaryMobileNo']} Number',
                                                 btnType: 3,
                                                 buttons: [
                                                   DialogButton(

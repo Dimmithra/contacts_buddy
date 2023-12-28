@@ -34,6 +34,7 @@ class DataBaseHelper {
     );
   }
 
+  //insert mobile number
   Future<String> createNewNumber(ContactModel contactModel) async {
     try {
       final Database db = await initDB();
@@ -47,6 +48,7 @@ class DataBaseHelper {
     }
   }
 
+  //get all contact records
   Future<List<Map<String, dynamic>>> getAllData() async {
     final Database db = await initDB();
     return await db.query("contactdetails");
@@ -64,6 +66,7 @@ class DataBaseHelper {
     }
   }
 
+  //update
   Future<String> updateContactRecorde(
     // int userid,
     String firstName,
@@ -99,6 +102,7 @@ class DataBaseHelper {
     }
   }
 
+  // Filtter
   Future<List<Map<String, dynamic>>> filterData(
       {required String searchTerm}) async {
     // dev.log("data bse: $searchTerm");

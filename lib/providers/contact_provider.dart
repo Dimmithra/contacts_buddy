@@ -117,6 +117,7 @@ class ContactProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //GET all record
   List<Map<String, dynamic>> data = [];
 
   Future<void> loadAllContactRecords(context) async {
@@ -147,6 +148,7 @@ class ContactProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //delete Funtion
   Future<void> deleteRecord(context, {required String mobileNo}) async {
     try {
       setloadDeleteRec(true);
@@ -155,7 +157,7 @@ class ContactProvider extends ChangeNotifier {
       if (res == 'success') {
         commonMessage(
           context,
-          errorTxt: 'Contact record Delete Succes Success',
+          errorTxt: 'Contact record Delete Succes',
           btnType: 3,
           buttons: [
             DialogButton(
@@ -220,9 +222,7 @@ class ContactProvider extends ChangeNotifier {
               color: kPrimaryBtn,
               child: const Text(
                 'Okay',
-                style: TextStyle(
-                  color: kdefWhiteColor,
-                ),
+                style: TextStyle(color: kdefWhiteColor),
               ),
               onPressed: () {
                 Navigator.pushAndRemoveUntil(
@@ -284,6 +284,7 @@ class ContactProvider extends ChangeNotifier {
     }
   }
 
+  //FILTER contact records
   String searchTerm = '';
   // List<Map<String, dynamic>> filteredData = [];
   String get getsearchTerm => searchTerm;
@@ -341,7 +342,7 @@ class ContactProvider extends ChangeNotifier {
     packageInfo = info;
   }
 
-  // var date = DateTime.now();
+  // var date / Time
   String time = DateFormat("HH:mm:ss").format(DateTime.now());
   String date = DateFormat("yyyy-MM-dd").format(DateTime.now());
 }
